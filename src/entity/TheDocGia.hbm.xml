@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entity.TheDocGia" table="tblthedocgia" catalog="dbthuvien">
+        <id name="MaTheDocGia" type="int">
+            <column name="MaTheDocGia" />
+            <generator class="assigned" />
+        </id>
+        <property name="MaNhanVienLap" type="int">
+            <column name="MaNhanVienLap" />
+        </property>
+        <property name="LoaiDocGia" type="string">
+            <column name="LoaiDocGia" />
+        </property>
+        <property name="HoTen" type="string">
+            <column name="HoTen" />
+        </property>
+        <property name="DiaChi" type="string">
+            <column name="DiaChi" />
+        </property>
+        <property name="Email" type="string">
+            <column name="Email" />
+        </property>
+        <property name="NgaySinh" type="date">
+            <column name="NgaySinh" />
+        </property>
+        <property name="NgayLapThe" type="date">
+            <column name="NgayLapThe" />
+        </property>
+        <property name="TienNo" type="int">
+            <column name="TienNo" />
+        </property>
+        <property name="TrangThaiXoa" type="boolean">
+            <column name="TrangThaiXoa" />
+        </property>
+    </class>
+</hibernate-mapping>
