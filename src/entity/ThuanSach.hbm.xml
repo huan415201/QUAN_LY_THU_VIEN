@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entity.ThuanSach" table="tblSach" catalog="dbthuvien">
+        <id name="MaSach" type="int">
+            <column name="MaSach" />
+            <generator class="assigned" />
+        </id>
+        <property name="MaNhanVienTiepNhan" type="int">
+            <column name="MaNhanVienTiepNhan" />
+        </property>
+        <property name="TenSach" type="string">
+            <column name="TenSach" />
+        </property>
+        <property name="TheLoai" type="string">
+            <column name="TheLoai" />
+        </property>
+        <property name="TacGia" type="string">
+            <column name="TacGia" />
+        </property>
+        <property name="NamXuatBan" type="int">
+            <column name="NamXuatBan" />
+        </property>
+        <property name="NhaXuatBan" type="string">
+            <column name="NhaXuatBan" />
+        </property>
+        <property name="NgayNhap" type="date">
+            <column name="NgayNhap" />
+        </property>
+        <property name="TriGia" type="int">
+            <column name="TriGia" />
+        </property>
+        <property name="TrangThaiXoa" type="int">
+            <column name="TrangThaiXoa" />
+        </property>
+    </class>
+</hibernate-mapping>

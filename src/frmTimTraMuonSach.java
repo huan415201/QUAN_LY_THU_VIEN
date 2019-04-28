@@ -58,7 +58,7 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("Tìm kiếm");
 
         tbSach.setModel(
             tableModel
@@ -77,9 +77,10 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(231, 231, 231)
-                        .addComponent(jLabel1)))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -150,25 +151,8 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
     }
 
     private static TableModel createTableModel() {
-        Vector<String> columns = new Vector<>(Arrays.asList("Name", "Address", "Age"));
-        Vector<Vector<Object>> rows = new Vector<>();
-
-        DataFactory dataFactory = new DataFactory();
-        for (int i = 1; i <= 30; i++) {
-            Vector<Object> v = new Vector<>();
-            v.add(dataFactory.getName());
-            v.add(dataFactory.getAddress() + ", " + dataFactory.getCity());
-            v.add(dataFactory.getNumberBetween(18, 80));
-            rows.add(v);
-        }
-
-        DefaultTableModel dtm = new DefaultTableModel(rows, columns) {
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                return columnIndex == 2 ? Integer.class : String.class;
-            }
-        };
-        return dtm;
+      TableModel md = new UserTableModel.SachTableModel();
+      return md;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
