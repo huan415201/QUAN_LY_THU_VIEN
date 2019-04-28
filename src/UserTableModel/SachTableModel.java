@@ -45,6 +45,7 @@ public class SachTableModel extends AbstractTableModel {
         return 6;
     }
 
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         ThuanSach p = PersonList.get(rowIndex);
         Object[] values = new Object[]{rowIndex+1, p.getMaSach(), p.getTenSach(), p.getTheLoai(), p.getTacGia(), p.getTrangThaiXoa()};

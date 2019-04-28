@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
@@ -44,4 +45,36 @@ public class TheDocGiaDAO {
         query.setParameter("TrangThaiXoa", false);
         return query.executeUpdate();
     }
+    
+    public static String[] layDanhSachTenDocGia() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		ArrayList<String> lst = new ArrayList<>();
+		
+		session.beginTransaction();
+		String sql = "SELECT * FROM tblthedocgia";
+		SQLQuery query = session.createSQLQuery(sql);
+		query.addEntity(TheDocGia.class);
+		List employees = query.list();
+		// System.out.println("size employees" + employees.iterator());
+
+		// System.out.println("Loi ngay day");
+		for (Iterator iterator = employees.iterator(); iterator.hasNext();) {
+			TheDocGia employee = (TheDocGia) iterator.next();
+			System.out.println(employee.getMaTheDocGia());
+			lst.add(String.valueOf(employee.getMaTheDocGia()));
+
+			
+			
+			// lstDSMON.add(employee.getMaMonHoc());
+
+			/*
+			 * System.out.print("First Name: " + employee.getMaMonHoc());
+			 * System.out.print("  Last Name: " + employee.getTenMonHoc());
+			 * System.out.println("  Salary: " + employee.getThuTrongTuan());
+			 */
+		}
+		String[] lstDSMON = lst.toArray(new String[lst.size()]);
+		session.close();
+		return lstDSMON;
+	}
 }
