@@ -2,6 +2,7 @@
 import DAO.TheDocGiaDAO;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import tools.TheDocGiaComboModel;
+import tools.TinhThang;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -40,6 +42,7 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
         cbModelTheDocGia = new TheDocGiaComboModel(dsTheDocGia);
         dm.setColumnIdentifiers(new Object[]{"STT", "Mã sách", "Tên sách", "Thể loại", "Tác giả"});
         initComponents();
+        txtLoi.setVisible(false);
         Date date = new Date();
         dtpNgayMuon.setFormats(new String[]{"dd/MM/yyyy"});
         dtpNgayMuon.setDate(date);
@@ -265,6 +268,27 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
 
     private void btnLuuPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuPhieuActionPerformed
         // TODO add your handling code here:
+        String[] dsMaTheDocGia = TheDocGiaDAO.layDanhSachMaTheDocGia();
+
+        System.out.println("Ma doc gia: " + dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
+
+        Date now = new Date();
+
+        Date NgayLapThe = TheDocGiaDAO.layNgayLapBangMaThe(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
+        System.out.println("Ngay Lap The: " + NgayLapThe);
+        Calendar cal1 = Calendar.getInstance();
+        cal1.set(NgayLapThe.getYear(), NgayLapThe.getMonth(), NgayLapThe.getDate());
+        Calendar cal2 = Calendar.getInstance();
+        cal2.set(now.getYear(), now.getMonth(), now.getDate());
+        boolean valid = TinhThang.isSixMonthsAgo(cal2, cal1);
+
+        System.out.println("Kiem tra 6 thang: " + valid);
+        if (valid) {
+            txtLoi.setVisible(true);
+            txtLoi.setText("Thẻ quá hạn.");
+        }else{
+            txtLoi.setVisible(false);
+        }
 
     }//GEN-LAST:event_btnLuuPhieuActionPerformed
 
