@@ -1,5 +1,7 @@
 
 import DAO.TheDocGiaDAO;
+import DAO.tblphieumuonsachDAO;
+import entity.tblphieumuonsach;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -269,7 +271,7 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
     private void btnLuuPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuPhieuActionPerformed
         // TODO add your handling code here:
         String[] dsMaTheDocGia = TheDocGiaDAO.layDanhSachMaTheDocGia();
-
+        
         System.out.println("Ma doc gia: " + dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
 
         Date now = new Date();
@@ -289,7 +291,13 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
         }else{
             txtLoi.setVisible(false);
         }
-
+        String[] DSPhieuMuonHienTai = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGia(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
+        
+        System.out.println("DanhSachPhieuDangMuon: " + DSPhieuMuonHienTai.length);
+        
+        if(DSPhieuMuonHienTai.length >0){
+            txtLoi.setText("Tài khoản đang mượng sách");
+        }
     }//GEN-LAST:event_btnLuuPhieuActionPerformed
 
     /**

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entity.tblphieumuonsach" table="tblphieumuonsach" catalog="dbthuvien">
+        <id name="MaPhieuMuon" type="int">
+            <column name="MaPhieuMuon" />
+            <generator class="assigned" />
+        </id>
+        <property name="MaTheDocGia" type="int">
+            <column name="MaTheDocGia" />
+        </property>
+        <property name="NgayMuon" type="date">
+            <column name="NgayMuon" />
+        </property>
+        <property name="TrangThaiXoa" type="boolean">
+            <column name="TrangThaiXoa" />
+        </property>
+    </class>
+</hibernate-mapping>
