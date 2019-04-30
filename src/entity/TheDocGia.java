@@ -1,9 +1,18 @@
 package entity;
 
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class TheDocGia implements java.io.Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MaTheDocGia", updatable = false, nullable = false)
     private int MaTheDocGia;
     private int MaNhanVienLap;
     private String LoaiDocGia;

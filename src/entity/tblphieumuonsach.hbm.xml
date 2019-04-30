@@ -6,7 +6,7 @@
     <class name="entity.tblphieumuonsach" table="tblphieumuonsach" catalog="dbthuvien">
         <id name="MaPhieuMuon" type="int">
             <column name="MaPhieuMuon" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="MaTheDocGia" type="int">
             <column name="MaTheDocGia" />

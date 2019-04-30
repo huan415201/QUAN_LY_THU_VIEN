@@ -6,7 +6,7 @@
     <class name="entity.ThuanSach" table="tblSach" catalog="dbthuvien">
         <id name="MaSach" type="int">
             <column name="MaSach" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="MaNhanVienTiepNhan" type="int">
             <column name="MaNhanVienTiepNhan" />

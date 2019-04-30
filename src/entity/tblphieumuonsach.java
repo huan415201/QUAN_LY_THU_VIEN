@@ -1,10 +1,18 @@
 package entity;
 
 import java.util.Date;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+@Entity
 public class tblphieumuonsach implements java.io.Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MaPhieuMuon", updatable = false, nullable = false)
     private int MaPhieuMuon;
+    
     private int MaTheDocGia;
     private Date NgayMuon;
     private boolean TrangThaiXoa;
@@ -50,6 +58,5 @@ public class tblphieumuonsach implements java.io.Serializable {
     public void setTrangThaiXoa(boolean TrangThaiXoa) {
         this.TrangThaiXoa = TrangThaiXoa;
     }
-
 
 }

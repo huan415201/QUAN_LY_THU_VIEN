@@ -1,6 +1,8 @@
 
 import DAO.TheDocGiaDAO;
+import DAO.tblchitietphieumuonDAO;
 import DAO.tblphieumuonsachDAO;
+import entity.tblchitietphieumuon;
 import entity.tblphieumuonsach;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -234,7 +236,7 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        TableModel tableModel = createTableModel();
+        TableModel tableModel = createTableModelSachChuaMuon();
         JTable tbSach2 = new JTable();
         tbSach2.setModel(tableModel);
         JScrollPane jScrollPane1 = new JScrollPane();
@@ -271,7 +273,7 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
     private void btnLuuPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuPhieuActionPerformed
         // TODO add your handling code here:
         String[] dsMaTheDocGia = TheDocGiaDAO.layDanhSachMaTheDocGia();
-        
+
         System.out.println("Ma doc gia: " + dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
 
         Date now = new Date();
@@ -288,15 +290,32 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
         if (valid) {
             txtLoi.setVisible(true);
             txtLoi.setText("Thẻ quá hạn.");
-        }else{
+        } else {
             txtLoi.setVisible(false);
         }
         String[] DSPhieuMuonHienTai = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGia(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
-        
+
         System.out.println("DanhSachPhieuDangMuon: " + DSPhieuMuonHienTai.length);
-        
-        if(DSPhieuMuonHienTai.length >0){
-            txtLoi.setText("Tài khoản đang mượng sách");
+
+        if (DSPhieuMuonHienTai.length > 0) {
+            txtLoi.setVisible(true);
+            txtLoi.setText("Tài khoản đang mượn sách");
+            return;
+        }
+
+        tblphieumuonsach t = new tblphieumuonsach();
+        t.setMaTheDocGia(Integer.parseInt(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]));
+        t.setNgayMuon(new Date());
+        t.setTrangThaiXoa(false);
+        int newid = tblphieumuonsachDAO.themPhieuMuon(t);
+
+        for (int i = 0; i < tbMuon.getRowCount(); i++) {
+            tblchitietphieumuon ct = new tblchitietphieumuon();
+            ct.setMaPhieuMuon(newid);
+
+            int MaSach = Integer.parseInt(tbMuon.getModel().getValueAt(i, 1).toString());
+            ct.setMaSach(MaSach);
+            tblchitietphieumuonDAO.ThemChiTieuPhieuMuon(ct);
         }
     }//GEN-LAST:event_btnLuuPhieuActionPerformed
 
@@ -336,10 +355,15 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
     }
 
     private static TableModel createTableModel() {
-        TableModel md = new UserTableModel.SachTableModel();
+        TableModel md = new UserTableModel.SachTableModel("select * from tblSach");
         return md;
     }
 
+    private static TableModel createTableModelSachChuaMuon() {
+        String sql = "select * from tblsach ts where ts.MaSach not in( select tc.MaSach from tblchitietphieumuon tc inner join tblphieumuonsach tm on tc.MaPhieuMuon = tm.MaPhieuMuon and tm.TrangThaiXoa = 0 )";
+        TableModel md = new UserTableModel.SachTableModel(sql);
+        return md;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuuPhieu;

@@ -20,12 +20,12 @@ public class SachTableModel extends AbstractTableModel {
     private static final long serialVersionUID = 6105842825518764825L;
     private ArrayList<ThuanSach> PersonList;
 
-    public SachTableModel() {
+    public SachTableModel(String sql) {
         super();
         SessionFactory sf = new Configuration().configure().buildSessionFactory();
         Session session = sf.openSession();
 
-        Query q = session.createSQLQuery("select * from tblSach").addEntity(ThuanSach.class);;
+        Query q = session.createSQLQuery(sql).addEntity(ThuanSach.class);
         
         List tmp = q.list();
         PersonList = new ArrayList<ThuanSach>();
