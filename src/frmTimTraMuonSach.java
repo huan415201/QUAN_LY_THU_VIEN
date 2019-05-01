@@ -2,13 +2,16 @@
 import DAO.TheDocGiaDAO;
 import DAO.tblchitietphieumuonDAO;
 import DAO.tblphieumuonsachDAO;
+import UserTableModel.SachTableModel;
 import entity.tblchitietphieumuon;
 import entity.tblphieumuonsach;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -16,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 import tools.TheDocGiaComboModel;
 import tools.TinhThang;
 
@@ -41,6 +45,8 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
 
     String[] dsTheDocGia = TheDocGiaDAO.layDanhSachTenDocGia();
     TheDocGiaComboModel cbModelTheDocGia;
+
+    TableModel tmChon = createTableModelSachChuaMuon();
 
     public frmTimTraMuonSach() {
         cbModelTheDocGia = new TheDocGiaComboModel(dsTheDocGia);
@@ -236,35 +242,64 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        TableModel tableModel = createTableModelSachChuaMuon();
+
+        ArrayList<String> danhSachDangChon = new ArrayList<>();
+
+        for (int i = 0; i < dm.getRowCount(); i++) {
+            String MaSach = dm.getValueAt(i, 1).toString();
+            danhSachDangChon.add(MaSach);
+
+        }
+        System.out.println("Danh sach: " + danhSachDangChon.size());
+
+        //DefaultTableModel dt = new DefaultTableModel(data, columnNames);
         JTable tbSach2 = new JTable();
-        tbSach2.setModel(tableModel);
+
+        if (danhSachDangChon.size() > 0) {
+
+            DefaultTableModel model = new DefaultTableModel(new String[]{"STT", "Mã Sách", "Tên Sách", "Thể loại", "Tác giả", "Tình trạng"}, 0);
+            //TableModel n = new UserTableModel.SachTableModel("select * from tblsach");
+            TableModel n = createTableModelSachChuaMuon();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                model.removeRow(i);
+            }
+            System.out.println("n.getRowCount(): " + n.getRowCount());
+            for (int i = 0; i < n.getRowCount(); i++) {
+                String cot1 = n.getValueAt(i, 1).toString();
+                String cot2 = n.getValueAt(i, 2).toString();
+                String cot3 = n.getValueAt(i, 3).toString();
+                String cot4 = n.getValueAt(i, 4).toString();
+                String cot5 = n.getValueAt(i, 5).toString();
+                if (!danhSachDangChon.contains(cot1)) {
+                    model.addRow(new Object[]{i, cot1, cot2, cot3, cot4, cot5});
+                }
+            }
+            tbSach2.setModel(model);
+        } else {
+            tbSach2.setModel(tmChon);
+        }
+
         JScrollPane jScrollPane1 = new JScrollPane();
 
         jScrollPane1.setViewportView(tbSach2);
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
         panel.add(jScrollPane1);
-//            panel.add(new JLabel("Field 1:"));
-//            panel.add(field1);
-//            panel.add(new JLabel("Field 2:"));
-//            panel.add(field2);
         int result = JOptionPane.showConfirmDialog(null, panel, "Thêm Sách",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
+            if (tbSach2.getRowCount() > 0) {
+                int column = 1;
+                int row = tbSach2.getSelectedRow();
 
-            int column = 1;
-            int row = tbSach2.getSelectedRow();
+                String MaSach = tbSach2.getModel().getValueAt(row, column).toString();
+                String TenSach = tbSach2.getModel().getValueAt(row, column + 1).toString();
+                String TheLoai = tbSach2.getModel().getValueAt(row, column + 2).toString();
+                String TacGia = tbSach2.getModel().getValueAt(row, column + 3).toString();
+                Object[] newRowData = {tbMuon.getRowCount() + 1, MaSach, TenSach, TheLoai, TacGia};
 
-            String MaSach = tbSach2.getModel().getValueAt(row, column).toString();
-            String TenSach = tbSach2.getModel().getValueAt(row, column + 1).toString();
-            String TheLoai = tbSach2.getModel().getValueAt(row, column + 2).toString();
-            String TacGia = tbSach2.getModel().getValueAt(row, column + 3).toString();
-            Object[] newRowData = {tbMuon.getRowCount() + 1, MaSach, TenSach, TheLoai, TacGia};
-
-            dm.addRow(newRowData);
-//                dm.setValueAt(MaSach, row, column);
-//                dm.setValueAt(MaSach, row, column);
+                dm.addRow(newRowData);
+            }
         } else {
             System.out.println("Cancelled");
         }
@@ -274,38 +309,47 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
         // TODO add your handling code here:
         String[] dsMaTheDocGia = TheDocGiaDAO.layDanhSachMaTheDocGia();
 
-        System.out.println("Ma doc gia: " + dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
-
+//        System.out.println("Ma doc gia: " + dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
         Date now = new Date();
 
         Date NgayLapThe = TheDocGiaDAO.layNgayLapBangMaThe(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
-        System.out.println("Ngay Lap The: " + NgayLapThe);
+//        System.out.println("Ngay Lap The: " + NgayLapThe);
         Calendar cal1 = Calendar.getInstance();
         cal1.set(NgayLapThe.getYear(), NgayLapThe.getMonth(), NgayLapThe.getDate());
         Calendar cal2 = Calendar.getInstance();
         cal2.set(now.getYear(), now.getMonth(), now.getDate());
         boolean valid = TinhThang.isSixMonthsAgo(cal2, cal1);
 
-        System.out.println("Kiem tra 6 thang: " + valid);
+        // System.out.println("Kiem tra 6 thang: " + valid);
         if (valid) {
             txtLoi.setVisible(true);
+            txtLoi.setForeground(Color.RED);
             txtLoi.setText("Thẻ quá hạn.");
+            return;
         } else {
+            txtLoi.setForeground(Color.GREEN);
             txtLoi.setVisible(false);
         }
         String[] DSPhieuMuonHienTai = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGia(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
 
         System.out.println("DanhSachPhieuDangMuon: " + DSPhieuMuonHienTai.length);
-
+        if (tbMuon.getModel().getRowCount() == 0) {
+            txtLoi.setVisible(true);
+            txtLoi.setForeground(Color.RED);
+            txtLoi.setText("Chưa chọn sách");
+            return;
+        }
         if (DSPhieuMuonHienTai.length > 0) {
             txtLoi.setVisible(true);
+            txtLoi.setForeground(Color.RED);
             txtLoi.setText("Tài khoản đang mượn sách");
             return;
         }
 
         tblphieumuonsach t = new tblphieumuonsach();
         t.setMaTheDocGia(Integer.parseInt(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]));
-        t.setNgayMuon(new Date());
+        Date NgayMuon = dtpNgayMuon.getDate();
+        t.setNgayMuon(NgayMuon);
         t.setTrangThaiXoa(false);
         int newid = tblphieumuonsachDAO.themPhieuMuon(t);
 
@@ -317,6 +361,9 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
             ct.setMaSach(MaSach);
             tblchitietphieumuonDAO.ThemChiTieuPhieuMuon(ct);
         }
+        txtLoi.setVisible(true);
+        txtLoi.setForeground(Color.GREEN);
+        txtLoi.setText("Thêm phiếu mượn thành công!");
     }//GEN-LAST:event_btnLuuPhieuActionPerformed
 
     /**
