@@ -7,11 +7,14 @@ import entity.tblchitietphieumuon;
 import entity.tblphieumuonsach;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -47,6 +50,8 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
     TheDocGiaComboModel cbModelTheDocGia;
 
     TableModel tmChon = createTableModelSachChuaMuon();
+    String[] dsMaTheDocGia = TheDocGiaDAO.layDanhSachMaTheDocGia();
+    int SoSachDaMuon = 0;
 
     public frmTimTraMuonSach() {
         cbModelTheDocGia = new TheDocGiaComboModel(dsTheDocGia);
@@ -59,6 +64,29 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
         tbMuon.setDefaultEditor(Object.class, null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        //Hien sach con lai
+        String[] DSPhieuMuonHienTai = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGia(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()], new Date());
+        SoSachDaMuon = DSPhieuMuonHienTai.length;
+        txtSoSachConLai.setText(String.valueOf(SoSachDaMuon));
+
+        cbbMaTheDocGia.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent event) {
+                if (kiemTraHan()) {
+                    txtSoSachConLai.setText("0");
+                    txtSoSachDangChon.setText("0");
+                    return;
+                }
+                if (kiemTra4Ngay()) {
+                    return;
+                }
+                txtSoSachDangChon.setText(String.valueOf(tbMuon.getRowCount()));
+                JComboBox comboBox = (JComboBox) event.getSource();
+
+                String[] DSPhieuMuonHienTai = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGia(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()], new Date());
+                SoSachDaMuon = DSPhieuMuonHienTai.length;
+                txtSoSachConLai.setText(String.valueOf(DSPhieuMuonHienTai.length + dm.getRowCount()));
+            }
+        });
     }
 
     /**
@@ -77,7 +105,7 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbSach = new javax.swing.JTable(tableModel);
         jTextField2 = RowFilterUtil.createRowFilter(tbSach);
-        jPanel2 = new javax.swing.JPanel();
+        pnlMuonSach = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         cbbMaTheDocGia = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -88,6 +116,11 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
         btnLuuPhieu = new javax.swing.JButton();
         dtpNgayMuon = new org.jdesktop.swingx.JXDatePicker();
         txtLoi = new javax.swing.JLabel();
+        txtConLai = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtSoSachConLai = new javax.swing.JLabel();
+        txtConLai1 = new javax.swing.JLabel();
+        txtSoSachDangChon = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -174,28 +207,42 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
         txtLoi.setForeground(new java.awt.Color(255, 0, 0));
         txtLoi.setText("Lỗi");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        txtConLai.setForeground(new java.awt.Color(0, 0, 255));
+        txtConLai.setText("Số sách mượn:");
+
+        txtSoSachConLai.setText("jLabel5");
+
+        txtConLai1.setForeground(new java.awt.Color(0, 0, 255));
+        txtConLai1.setText("Số sách đang chọn:");
+
+        txtSoSachDangChon.setText("0");
+
+        javax.swing.GroupLayout pnlMuonSachLayout = new javax.swing.GroupLayout(pnlMuonSach);
+        pnlMuonSach.setLayout(pnlMuonSachLayout);
+        pnlMuonSachLayout.setHorizontalGroup(
+            pnlMuonSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMuonSachLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addComponent(jScrollPane3)
                 .addGap(24, 24, 24))
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(pnlMuonSachLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnThem)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnXoa)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnLuuPhieu)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLoi)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(pnlMuonSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMuonSachLayout.createSequentialGroup()
+                        .addGroup(pnlMuonSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlMuonSachLayout.createSequentialGroup()
+                                .addComponent(txtLoi)
+                                .addGap(177, 177, 177)
+                                .addComponent(jLabel4)
+                                .addGap(12, 12, 12)
+                                .addComponent(txtConLai)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtSoSachConLai)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtConLai1)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtSoSachDangChon))
+                            .addGroup(pnlMuonSachLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cbbMaTheDocGia, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -203,21 +250,35 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
                                 .addComponent(dtpNgayMuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMuonSachLayout.createSequentialGroup()
+                        .addComponent(btnThem)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnXoa)
+                        .addGap(35, 35, 35)
+                        .addComponent(btnLuuPhieu)
+                        .addGap(190, 190, 190))))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        pnlMuonSachLayout.setVerticalGroup(
+            pnlMuonSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMuonSachLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlMuonSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cbbMaTheDocGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(dtpNgayMuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLoi)
+                .addGroup(pnlMuonSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtLoi)
+                    .addComponent(txtConLai)
+                    .addComponent(jLabel4)
+                    .addComponent(txtSoSachConLai)
+                    .addGroup(pnlMuonSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtConLai1)
+                        .addComponent(txtSoSachDangChon)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlMuonSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnXoa)
                     .addComponent(btnThem)
                     .addComponent(btnLuuPhieu))
@@ -226,7 +287,7 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
                 .addContainerGap(134, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Phiếu mượn sách", jPanel2);
+        jTabbedPane1.addTab("Phiếu mượn sách", pnlMuonSach);
 
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -237,11 +298,103 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_dtpNgayMuonActionPerformed
 
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        dm.removeRow(tbMuon.getSelectedRow());
-    }//GEN-LAST:event_btnXoaActionPerformed
+    private Boolean kiemTra4Ngay() {
+        String[] Sach4Ngay = tblphieumuonsachDAO.layDSKiemTraNgayMuon(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()], new Date());
+
+        if (Sach4Ngay.length > 0) {
+            txtLoi.setVisible(true);
+            txtLoi.setForeground(Color.RED);
+            txtLoi.setText("Tài khoản mượn sách quá 4 ngày");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private Boolean kiemTraHan() {
+        Date now = new Date();
+        Date NgayLapThe = TheDocGiaDAO.layNgayLapBangMaThe(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
+        //        System.out.println("Ngay Lap The: " + NgayLapThe);
+        Calendar cal1 = Calendar.getInstance();
+        cal1.set(NgayLapThe.getYear(), NgayLapThe.getMonth(), NgayLapThe.getDate());
+        Calendar cal2 = Calendar.getInstance();
+        cal2.set(now.getYear(), now.getMonth(), now.getDate());
+        boolean valid = TinhThang.isSixMonthsAgo(cal2, cal1);
+
+        // System.out.println("Kiem tra 6 thang: " + valid);
+        if (valid) {
+            txtLoi.setVisible(true);
+            txtLoi.setForeground(Color.RED);
+            txtLoi.setText("Thẻ quá hạn.");
+        } else {
+            txtLoi.setForeground(Color.GREEN);
+            txtLoi.setVisible(false);
+        }
+        return valid;
+    }
+
+    private void btnLuuPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuPhieuActionPerformed
+
+        if (kiemTraHan()) {
+            return;
+        }
+        if (kiemTra4Ngay()) {
+            return;
+        }
+        Date now = new Date();
+
+        String[] DSPhieuMuonHienTai = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGia(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()], now);
+        if (DSPhieuMuonHienTai.length > 4) {
+            txtLoi.setVisible(true);
+            txtLoi.setForeground(Color.RED);
+            txtLoi.setText("Chỉ được mượn tối đa 5 quyển");
+            return;
+        }
+        System.out.println("DanhSachPhieuDangMuon: " + DSPhieuMuonHienTai.length);
+        if (tbMuon.getModel().getRowCount() == 0) {
+            txtLoi.setVisible(true);
+            txtLoi.setForeground(Color.RED);
+            txtLoi.setText("Chưa chọn sách");
+            return;
+        }
+
+        tblphieumuonsach t = new tblphieumuonsach();
+        t.setMaTheDocGia(Integer.parseInt(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]));
+        Date NgayMuon = dtpNgayMuon.getDate();
+        t.setNgayMuon(NgayMuon);
+        t.setTrangThaiXoa(false);
+        int newid = tblphieumuonsachDAO.themPhieuMuon(t);
+
+        for (int i = 0; i < tbMuon.getRowCount(); i++) {
+            tblchitietphieumuon ct = new tblchitietphieumuon();
+            ct.setMaPhieuMuon(newid);
+
+            int MaSach = Integer.parseInt(tbMuon.getModel().getValueAt(i, 1).toString());
+            ct.setMaSach(MaSach);
+            tblchitietphieumuonDAO.ThemChiTieuPhieuMuon(ct);
+        }
+        DefaultTableModel dmXoa = (DefaultTableModel) tbMuon.getModel();
+        int rowCount = dmXoa.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dmXoa.removeRow(i);
+        }
+
+        txtLoi.setVisible(true);
+        txtLoi.setForeground(Color.GREEN);
+        txtLoi.setText("Thêm phiếu mượn thành công!");
+    }//GEN-LAST:event_btnLuuPhieuActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        if (kiemTraHan()) {
+            return;
+        }
+        if (kiemTra4Ngay()) {
+            return;
+        }
+        String[] DSPhieuMuonHienTai = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGia(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()], new Date());
+        if (DSPhieuMuonHienTai.length + dm.getRowCount() > 4) {
+            return;
+        }
 
         ArrayList<String> danhSachDangChon = new ArrayList<>();
 
@@ -276,7 +429,7 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
             }
             tbSach2.setModel(model);
         } else {
-            tbSach2.setModel(tmChon);
+            tbSach2.setModel(createTableModelSachChuaMuon());
         }
 
         JScrollPane jScrollPane1 = new JScrollPane();
@@ -299,72 +452,29 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
                 Object[] newRowData = {tbMuon.getRowCount() + 1, MaSach, TenSach, TheLoai, TacGia};
 
                 dm.addRow(newRowData);
+                SoSachDaMuon += 1;
+                // txtSoSachConLai.setText(String.valueOf(SoSachDaMuon));
+                txtSoSachConLai.setText(String.valueOf(DSPhieuMuonHienTai.length + dm.getRowCount()));
+                txtSoSachDangChon.setText(String.valueOf(tbMuon.getRowCount()));
             }
         } else {
             System.out.println("Cancelled");
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
-    private void btnLuuPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuPhieuActionPerformed
-        // TODO add your handling code here:
-        String[] dsMaTheDocGia = TheDocGiaDAO.layDanhSachMaTheDocGia();
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
 
-//        System.out.println("Ma doc gia: " + dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
-        Date now = new Date();
-
-        Date NgayLapThe = TheDocGiaDAO.layNgayLapBangMaThe(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
-//        System.out.println("Ngay Lap The: " + NgayLapThe);
-        Calendar cal1 = Calendar.getInstance();
-        cal1.set(NgayLapThe.getYear(), NgayLapThe.getMonth(), NgayLapThe.getDate());
-        Calendar cal2 = Calendar.getInstance();
-        cal2.set(now.getYear(), now.getMonth(), now.getDate());
-        boolean valid = TinhThang.isSixMonthsAgo(cal2, cal1);
-
-        // System.out.println("Kiem tra 6 thang: " + valid);
-        if (valid) {
-            txtLoi.setVisible(true);
-            txtLoi.setForeground(Color.RED);
-            txtLoi.setText("Thẻ quá hạn.");
-            return;
-        } else {
-            txtLoi.setForeground(Color.GREEN);
-            txtLoi.setVisible(false);
-        }
-        String[] DSPhieuMuonHienTai = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGia(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]);
-
-        System.out.println("DanhSachPhieuDangMuon: " + DSPhieuMuonHienTai.length);
-        if (tbMuon.getModel().getRowCount() == 0) {
-            txtLoi.setVisible(true);
-            txtLoi.setForeground(Color.RED);
-            txtLoi.setText("Chưa chọn sách");
+        if (kiemTraHan()) {
             return;
         }
-        if (DSPhieuMuonHienTai.length > 0) {
-            txtLoi.setVisible(true);
-            txtLoi.setForeground(Color.RED);
-            txtLoi.setText("Tài khoản đang mượn sách");
+        if (kiemTra4Ngay()) {
             return;
         }
-
-        tblphieumuonsach t = new tblphieumuonsach();
-        t.setMaTheDocGia(Integer.parseInt(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]));
-        Date NgayMuon = dtpNgayMuon.getDate();
-        t.setNgayMuon(NgayMuon);
-        t.setTrangThaiXoa(false);
-        int newid = tblphieumuonsachDAO.themPhieuMuon(t);
-
-        for (int i = 0; i < tbMuon.getRowCount(); i++) {
-            tblchitietphieumuon ct = new tblchitietphieumuon();
-            ct.setMaPhieuMuon(newid);
-
-            int MaSach = Integer.parseInt(tbMuon.getModel().getValueAt(i, 1).toString());
-            ct.setMaSach(MaSach);
-            tblchitietphieumuonDAO.ThemChiTieuPhieuMuon(ct);
-        }
-        txtLoi.setVisible(true);
-        txtLoi.setForeground(Color.GREEN);
-        txtLoi.setText("Thêm phiếu mượn thành công!");
-    }//GEN-LAST:event_btnLuuPhieuActionPerformed
+        dm.removeRow(tbMuon.getSelectedRow());
+        String[] DSPhieuMuonHienTai = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGia(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()], new Date());
+        txtSoSachConLai.setText(String.valueOf(DSPhieuMuonHienTai.length + dm.getRowCount()));
+        txtSoSachDangChon.setText(String.valueOf(tbMuon.getRowCount()));
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -422,15 +532,20 @@ public class frmTimTraMuonSach extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JPanel pnlMuonSach;
     private javax.swing.JTable tbMuon;
     private javax.swing.JTable tbSach;
+    private javax.swing.JLabel txtConLai;
+    private javax.swing.JLabel txtConLai1;
     private javax.swing.JLabel txtLoi;
+    private javax.swing.JLabel txtSoSachConLai;
+    private javax.swing.JLabel txtSoSachDangChon;
     // End of variables declaration//GEN-END:variables
 }
