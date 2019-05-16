@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 26, 2019 at 02:40 PM
+-- Generation Time: May 16, 2019 at 06:19 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -108,6 +108,7 @@ CREATE TABLE IF NOT EXISTS `tblmatsach` (
 DROP TABLE IF EXISTS `tblnhanvien`;
 CREATE TABLE IF NOT EXISTS `tblnhanvien` (
   `MaNhanVien` int(11) NOT NULL AUTO_INCREMENT,
+  `MatKhau` varchar(50) DEFAULT NULL,
   `BoPhan` text NOT NULL,
   `ChucVu` text NOT NULL,
   `LoaiBangCap` text NOT NULL,
@@ -180,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `tblsach` (
   `TenSach` text NOT NULL,
   `TheLoai` text NOT NULL,
   `TacGia` text NOT NULL,
-  `NamXuatBan` year(4) NOT NULL,
+  `NamXuatBan` int(11) NOT NULL,
   `NhaXuatBan` text NOT NULL,
   `NgayNhap` datetime NOT NULL,
   `TriGia` int(11) NOT NULL,
@@ -222,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `tblthedocgia` (
   `TienNo` int(11) NOT NULL,
   `TrangThaiXoa` tinyint(1) NOT NULL,
   PRIMARY KEY (`MaTheDocGia`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblthedocgia`
