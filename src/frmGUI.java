@@ -238,6 +238,18 @@ public class frmGUI extends javax.swing.JFrame {
         lblGhiChu9 = new javax.swing.JLabel();
         btnLapPhieuTra9 = new javax.swing.JButton();
         lblTitle9 = new javax.swing.JLabel();
+        pnlThanhLySach = new javax.swing.JPanel();
+        lblTitle10 = new javax.swing.JLabel();
+        pnlDanhSachSach10 = new javax.swing.JPanel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        tblDanhSachSach10 = new javax.swing.JTable();
+        lblLyDoThanhLy10 = new javax.swing.JLabel();
+        cboLyDoThanhLy10 = new javax.swing.JComboBox<>();
+        btnThem10 = new javax.swing.JButton();
+        pnlDanhSachSachThanhLy10 = new javax.swing.JPanel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        tblDanhSachSachThanhLy10 = new javax.swing.JTable();
+        btnThanhLySach10 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -1436,6 +1448,138 @@ public class frmGUI extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Nhận trả sách", pnlNhanTraSach);
 
+        lblTitle10.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
+        lblTitle10.setText("Thanh Lý Sách");
+
+        pnlDanhSachSach10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Sách", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
+        pnlDanhSachSach10.setToolTipText("");
+        pnlDanhSachSach10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        tblDanhSachSach10.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane9.setViewportView(tblDanhSachSach10);
+
+        lblLyDoThanhLy10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblLyDoThanhLy10.setText("Lý do thanh lý:");
+
+        cboLyDoThanhLy10.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        cboLyDoThanhLy10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mất", "Hư hỏng", "Người dùng làm mất" }));
+
+        btnThem10.setBackground(new java.awt.Color(204, 255, 204));
+        btnThem10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnThem10.setText("Thêm");
+        btnThem10.setToolTipText("");
+
+        javax.swing.GroupLayout pnlDanhSachSach10Layout = new javax.swing.GroupLayout(pnlDanhSachSach10);
+        pnlDanhSachSach10.setLayout(pnlDanhSachSach10Layout);
+        pnlDanhSachSach10Layout.setHorizontalGroup(
+            pnlDanhSachSach10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDanhSachSach10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlDanhSachSach10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnThem10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pnlDanhSachSach10Layout.createSequentialGroup()
+                        .addComponent(lblLyDoThanhLy10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cboLyDoThanhLy10, 0, 154, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pnlDanhSachSach10Layout.setVerticalGroup(
+            pnlDanhSachSach10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDanhSachSach10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(pnlDanhSachSach10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLyDoThanhLy10)
+                    .addComponent(cboLyDoThanhLy10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnThem10, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        pnlDanhSachSachThanhLy10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Sách Thanh Lý", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
+        pnlDanhSachSachThanhLy10.setToolTipText("");
+        pnlDanhSachSachThanhLy10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        tblDanhSachSachThanhLy10.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane10.setViewportView(tblDanhSachSachThanhLy10);
+
+        btnThanhLySach10.setBackground(new java.awt.Color(204, 255, 204));
+        btnThanhLySach10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnThanhLySach10.setText("Thanh Lý Sách");
+        btnThanhLySach10.setToolTipText("");
+
+        javax.swing.GroupLayout pnlDanhSachSachThanhLy10Layout = new javax.swing.GroupLayout(pnlDanhSachSachThanhLy10);
+        pnlDanhSachSachThanhLy10.setLayout(pnlDanhSachSachThanhLy10Layout);
+        pnlDanhSachSachThanhLy10Layout.setHorizontalGroup(
+            pnlDanhSachSachThanhLy10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDanhSachSachThanhLy10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlDanhSachSachThanhLy10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                    .addComponent(btnThanhLySach10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        pnlDanhSachSachThanhLy10Layout.setVerticalGroup(
+            pnlDanhSachSachThanhLy10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDanhSachSachThanhLy10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnThanhLySach10, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout pnlThanhLySachLayout = new javax.swing.GroupLayout(pnlThanhLySach);
+        pnlThanhLySach.setLayout(pnlThanhLySachLayout);
+        pnlThanhLySachLayout.setHorizontalGroup(
+            pnlThanhLySachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThanhLySachLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitle10)
+                .addGap(260, 260, 260))
+            .addGroup(pnlThanhLySachLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlDanhSachSach10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(pnlDanhSachSachThanhLy10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnlThanhLySachLayout.setVerticalGroup(
+            pnlThanhLySachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlThanhLySachLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(lblTitle10)
+                .addGap(18, 18, 18)
+                .addGroup(pnlThanhLySachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlDanhSachSach10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlDanhSachSachThanhLy10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Thanh lý sách", pnlThanhLySach);
+
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -1673,8 +1817,10 @@ public class frmGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLapPhieuTra9;
     private javax.swing.JButton btnLuuPhieu;
+    private javax.swing.JButton btnThanhLySach10;
     private javax.swing.JButton btnThayMatKhau8;
     private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnThem10;
     private javax.swing.JButton btnThem3;
     private javax.swing.JButton btnThem4;
     private javax.swing.JButton btnThem5;
@@ -1689,6 +1835,7 @@ public class frmGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboHoTenDocGia7;
     private javax.swing.JComboBox<String> cboHoTenDocGia9;
     private javax.swing.JComboBox<String> cboLoaiDocGia3;
+    private javax.swing.JComboBox<String> cboLyDoThanhLy10;
     private javax.swing.JComboBox<String> cboNguoiGhiNhan7;
     private javax.swing.JComboBox<String> cboNguoiThu6;
     private javax.swing.JComboBox<String> cboNguoiTiepNhan5;
@@ -1705,6 +1852,7 @@ public class frmGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1712,6 +1860,7 @@ public class frmGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField2;
@@ -1730,6 +1879,7 @@ public class frmGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblHoTen6;
     private javax.swing.JLabel lblHoTen7;
     private javax.swing.JLabel lblLoaiDocGia3;
+    private javax.swing.JLabel lblLyDoThanhLy10;
     private javax.swing.JLabel lblMatKhauCu8;
     private javax.swing.JLabel lblMatKhauMoi8;
     private javax.swing.JLabel lblNgayGhiNhan7;
@@ -1754,6 +1904,7 @@ public class frmGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblTienNoTuTruoc9;
     private javax.swing.JLabel lblTienPhat7;
     private javax.swing.JLabel lblTienPhatKyNay9;
+    private javax.swing.JLabel lblTitle10;
     private javax.swing.JLabel lblTitle3;
     private javax.swing.JLabel lblTitle4;
     private javax.swing.JLabel lblTitle5;
@@ -1768,13 +1919,16 @@ public class frmGUI extends javax.swing.JFrame {
     private javax.swing.JPanel pblDanhSachSach5;
     private javax.swing.JPanel pnlDanhSachPhieuPhat6;
     private javax.swing.JPanel pnlDanhSachPhieuPhat7;
+    private javax.swing.JPanel pnlDanhSachSach10;
     private javax.swing.JPanel pnlDanhSachSachMuon9;
+    private javax.swing.JPanel pnlDanhSachSachThanhLy10;
     private javax.swing.JPanel pnlDanhSachTheDocGia3;
     private javax.swing.JPanel pnlLapPhieuPhat;
     private javax.swing.JPanel pnlLapTheDocGia;
     private javax.swing.JPanel pnlMatSach;
     private javax.swing.JPanel pnlMuonSach;
     private javax.swing.JPanel pnlNhanTraSach;
+    private javax.swing.JPanel pnlThanhLySach;
     private javax.swing.JPanel pnlThayMatKhau;
     private javax.swing.JPanel pnlThongTinDocGia;
     private javax.swing.JPanel pnlThongTinNhanVien4;
@@ -1788,7 +1942,9 @@ public class frmGUI extends javax.swing.JFrame {
     private javax.swing.JPasswordField psfMatKhauMoi8;
     private javax.swing.JTable tbMuon;
     private javax.swing.JTable tbSach;
+    private javax.swing.JTable tblDanhSachSach10;
     private javax.swing.JTable tblDanhSachSachMuon9;
+    private javax.swing.JTable tblDanhSachSachThanhLy10;
     private javax.swing.JTable tblNhanVien4;
     private javax.swing.JTable tblPhieuPhat6;
     private javax.swing.JTable tblPhieuPhat7;
