@@ -14,6 +14,7 @@ import java.util.Date;
 public class ThuanNhanVien {
 
     private int MaNhanVien;
+    private String MatKhau;
     private String BoPhan;
     private String ChucVu;
     private String LoaiBangCap;
@@ -24,11 +25,11 @@ public class ThuanNhanVien {
     private boolean TrangThaiXoa;
 
     public ThuanNhanVien() {
-
     }
 
-    public ThuanNhanVien(int MaNhanVien, String BoPhan, String ChucVu, String LoaiBangCap, String HoTen, String DiaChi, Date NgaySinh, String SoDienThoai, boolean TrangThaiXoa) {
+    public ThuanNhanVien(int MaNhanVien, String MatKhau, String BoPhan, String ChucVu, String LoaiBangCap, String HoTen, String DiaChi, Date NgaySinh, String SoDienThoai, boolean TrangThaiXoa) {
         this.MaNhanVien = MaNhanVien;
+        this.MatKhau = MatKhau;
         this.BoPhan = BoPhan;
         this.ChucVu = ChucVu;
         this.LoaiBangCap = LoaiBangCap;
@@ -45,6 +46,14 @@ public class ThuanNhanVien {
 
     public void setMaNhanVien(int MaNhanVien) {
         this.MaNhanVien = MaNhanVien;
+    }
+
+    public String getMatKhau() {
+        return MatKhau;
+    }
+
+    public void setMatKhau(String MatKhau) {
+        this.MatKhau = MatKhau;
     }
 
     public String getBoPhan() {
@@ -110,5 +119,5 @@ public class ThuanNhanVien {
     public void setTrangThaiXoa(boolean TrangThaiXoa) {
         this.TrangThaiXoa = TrangThaiXoa;
     }
-
+    
 }

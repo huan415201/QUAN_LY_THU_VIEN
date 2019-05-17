@@ -8,6 +8,9 @@
             <column name="MaNhanVien" />
             <generator class="identity" />
         </id>
+        <property name="MatKhau" type="string">
+            <column name="MatKhau" />
+        </property>
         <property name="BoPhan" type="string">
             <column name="BoPhan" />
         </property>
