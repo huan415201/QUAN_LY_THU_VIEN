@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 16, 2019 at 06:19 AM
+-- Generation Time: May 17, 2019 at 03:24 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS `tblchitietthanhly`;
 CREATE TABLE IF NOT EXISTS `tblchitietthanhly` (
   `MaPhieuThanhLy` int(11) NOT NULL,
   `MaSach` int(11) NOT NULL,
-  `LyDoThanhLy` text NOT NULL,
+  `LyDoThanhLy` varchar(50) NOT NULL,
   PRIMARY KEY (`MaPhieuThanhLy`,`MaSach`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -109,11 +109,11 @@ DROP TABLE IF EXISTS `tblnhanvien`;
 CREATE TABLE IF NOT EXISTS `tblnhanvien` (
   `MaNhanVien` int(11) NOT NULL AUTO_INCREMENT,
   `MatKhau` varchar(50) DEFAULT NULL,
-  `BoPhan` text NOT NULL,
-  `ChucVu` text NOT NULL,
-  `LoaiBangCap` text NOT NULL,
-  `HoTen` text NOT NULL,
-  `DiaChi` text NOT NULL,
+  `BoPhan` varchar(50) NOT NULL,
+  `ChucVu` varchar(50) NOT NULL,
+  `LoaiBangCap` varchar(50) NOT NULL,
+  `HoTen` varchar(50) NOT NULL,
+  `DiaChi` varchar(50) NOT NULL,
   `NgaySinh` date NOT NULL,
   `SoDienThoai` varchar(10) NOT NULL,
   `TrangThaiXoa` tinyint(1) NOT NULL,
@@ -178,11 +178,11 @@ DROP TABLE IF EXISTS `tblsach`;
 CREATE TABLE IF NOT EXISTS `tblsach` (
   `MaSach` int(11) NOT NULL AUTO_INCREMENT,
   `MaNhanVienTiepNhan` int(11) NOT NULL,
-  `TenSach` text NOT NULL,
-  `TheLoai` text NOT NULL,
-  `TacGia` text NOT NULL,
+  `TenSach` varchar(50) NOT NULL,
+  `TheLoai` varchar(50) NOT NULL,
+  `TacGia` varchar(50) NOT NULL,
   `NamXuatBan` int(11) NOT NULL,
-  `NhaXuatBan` text NOT NULL,
+  `NhaXuatBan` varchar(50) NOT NULL,
   `NgayNhap` datetime NOT NULL,
   `TriGia` int(11) NOT NULL,
   `TrangThaiXoa` tinyint(1) NOT NULL,
