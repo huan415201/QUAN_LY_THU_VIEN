@@ -5,8 +5,7 @@
  */
 package DAO;
 
-import entity.tblchitietphieumuon;
-import org.hibernate.Query;
+import entity.ThuanNhanVien;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
@@ -14,9 +13,9 @@ import util.HibernateUtil;
  *
  * @author hau
  */
-public class tblchitietphieumuonDAO {
+public class ThuanNhanVienDAO {
 
-    public static void ThemChiTieuPhieuMuon(tblchitietphieumuon t) {
+    public static void ThemNhanVien(ThuanNhanVien t) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
@@ -28,16 +27,5 @@ public class tblchitietphieumuonDAO {
         } finally {
             session.close();
         }
-    }
-    
-    public static void updateXoaMuon(String MaPhieuMuon) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
-        session.beginTransaction();
-        Query query = session.createSQLQuery(
-                "update tblphieumuonsach set TrangThaiXoa =1 where MaPhieuMuon =:MaPhieuMuon");
-        query.setParameter("MaPhieuMuon", MaPhieuMuon);
-        query.executeUpdate();
-        session.close();
     }
 }

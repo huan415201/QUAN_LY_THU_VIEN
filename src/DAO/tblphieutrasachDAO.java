@@ -5,8 +5,7 @@
  */
 package DAO;
 
-import entity.tblchitietphieumuon;
-import org.hibernate.Query;
+import entity.tblphieutrasach;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
@@ -14,30 +13,21 @@ import util.HibernateUtil;
  *
  * @author hau
  */
-public class tblchitietphieumuonDAO {
-
-    public static void ThemChiTieuPhieuMuon(tblchitietphieumuon t) {
+public class tblphieutrasachDAO {
+    public static int themPhieuTra(tblphieutrasach t) {
+        int id = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            session.save(t);
+            id = (int) session.save(t);
+            System.out.println("id moi: " + id);
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
             System.out.println(e);
         } finally {
             session.close();
+            return id;
         }
-    }
-    
-    public static void updateXoaMuon(String MaPhieuMuon) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
-        session.beginTransaction();
-        Query query = session.createSQLQuery(
-                "update tblphieumuonsach set TrangThaiXoa =1 where MaPhieuMuon =:MaPhieuMuon");
-        query.setParameter("MaPhieuMuon", MaPhieuMuon);
-        query.executeUpdate();
-        session.close();
     }
 }

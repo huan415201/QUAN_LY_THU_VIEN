@@ -14,5 +14,6 @@
         <mapping resource="entity/ThuanSach.hbm.xml"/>
         <mapping resource="entity/tblphieumuonsach.hbm.xml"/>
         <mapping resource="entity/tblchitietphieumuon.hbm.xml"/>
+        <mapping resource="entity/tblphieutrasach.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
