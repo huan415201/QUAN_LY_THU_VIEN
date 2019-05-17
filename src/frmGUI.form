@@ -815,6 +815,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Ti&#x1ebf;p Nh&#x1ead;n Nh&#xe2;n Vi&#xea;n"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThem4ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="dtpNgaySinh4">
                 </Component>

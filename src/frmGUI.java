@@ -1,10 +1,13 @@
 
 import DAO.TheDocGiaDAO;
+import DAO.ThuanNhanVienDAO;
 import DAO.tblchitietphieumuonDAO;
 import DAO.tblchitietphieutrasachDAO;
 import DAO.tblphieumuonsachDAO;
 import DAO.tblphieutrasachDAO;
 import UserTableModel.SachTableModel;
+import UserTableModel.ThuanTableModelNhanVien;
+import entity.ThuanNhanVien;
 import entity.tblchitietphieumuon;
 import entity.tblchitietphieutra;
 import entity.tblphieumuonsach;
@@ -13,6 +16,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -234,6 +238,20 @@ public class frmGUI extends javax.swing.JFrame {
                 btnTraSach.setVisible(true);
             }
         });
+
+        //Lam tiep nhan vien
+        dtpNgaySinh4.setFormats(new String[]{"dd/MM/yyyy"});
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+            String dateString = format.format(new Date());
+            Date NgayMacDinh = format.parse("1995-01-01");
+            dtpNgaySinh4.setDate(NgayMacDinh);
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+
+        KhoiTaoBangTiepNhanNhanVien(tblNhanVien4);
     }
 
     /**
@@ -741,6 +759,11 @@ public class frmGUI extends javax.swing.JFrame {
         btnThem4.setBackground(new java.awt.Color(204, 255, 204));
         btnThem4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnThem4.setText("Tiếp Nhận Nhân Viên");
+        btnThem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThem4ActionPerformed(evt);
+            }
+        });
 
         lblBangCap4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblBangCap4.setText("Bằng cấp:");
@@ -2020,6 +2043,36 @@ public class frmGUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnTraSachActionPerformed
+
+    private void btnThem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem4ActionPerformed
+        // TODO add your handling code here:
+        if (txtHoTen4.getText().equals("") || cboBangCap4.getSelectedItem().equals("") || cboBoPhan4.getSelectedItem().equals("") || cboChucVu4.getSelectedItem().equals("")
+                || txtSDT4.getText().equals("") || txtDiaChi4.getText().equals("")) {
+            lblGhiChu.setText("Vui lòng nhập đầy đủ thông tin");
+            lblGhiChu.setForeground(Color.RED);
+            return;
+        }
+
+        ThuanNhanVien t = new ThuanNhanVien();
+        t.setMatKhau("123456");
+        t.setHoTen(txtHoTen4.getText());
+        t.setBoPhan(cboBoPhan4.getSelectedItem().toString());
+        t.setChucVu(cboChucVu4.getSelectedItem().toString());
+        t.setLoaiBangCap(cboBangCap4.getSelectedItem().toString());
+        t.setDiaChi(txtDiaChi4.getText());
+        t.setNgaySinh(dtpNgaySinh4.getDate());
+        t.setTrangThaiXoa(false);
+        t.setSoDienThoai(txtSDT4.getText());
+        ThuanNhanVienDAO.ThemNhanVien(t);
+        lblGhiChu.setText("Thêm nhân viên thành công!");
+        lblGhiChu.setForeground(Color.GREEN);
+        System.out.println("frmGUI.btnThem4ActionPerformed(): them thanh cong");
+        KhoiTaoBangTiepNhanNhanVien(tblNhanVien4);
+    }//GEN-LAST:event_btnThem4ActionPerformed
+    //Lam tiep nhan nhanvien
+    public static void KhoiTaoBangTiepNhanNhanVien(JTable tbNhanVien4) {
+        tbNhanVien4.setModel(new ThuanTableModelNhanVien("select* from tblnhanvien"));
+    }
 
     /**
      * @param args the command line arguments
