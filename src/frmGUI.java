@@ -2097,6 +2097,9 @@ public class frmGUI extends javax.swing.JFrame {
 
     private void btnThuanThanhLySachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThuanThanhLySachActionPerformed
         // TODO add your handling code here:
+        if(tblDanhSachSach10.getRowCount() == 0){
+            return;
+        }
         ThuanThanhLySach t = new ThuanThanhLySach();
         t.setMaNhanVienLap(MaNhanVienDangNhap);
         t.setNgayThanhLy(new Date());
@@ -2112,7 +2115,7 @@ public class frmGUI extends javax.swing.JFrame {
         ct.setMaSach(MaSachHienTai);
         ct.setLyDoThanhLy(cboLyDoThanhLy10.getSelectedItem().toString());
         ThuanChiTietThanhLyDAO.themChiTietPhieuThanhLy(ct);
-       //  System.out.println("frmGUI.btnThuanThanhLySachActionPerformed() MaSachHienTai: " + MaSachHienTai);
+        //  System.out.println("frmGUI.btnThuanThanhLySachActionPerformed() MaSachHienTai: " + MaSachHienTai);
         ResetThanhLy(tblDanhSachSach10, tblDanhSachSachThanhLy10);
     }//GEN-LAST:event_btnThuanThanhLySachActionPerformed
     //Lam tiep nhan nhanvien
@@ -2162,7 +2165,7 @@ public class frmGUI extends javax.swing.JFrame {
     }
 
     private static TableModel createTableModelSachChuaMuon() {
-        String sql = "select * from tblsach ts where ts.MaSach not in( select tc.MaSach from tblchitietphieumuon tc inner join tblphieumuonsach tm on tc.MaPhieuMuon = tm.MaPhieuMuon and tm.TrangThaiXoa = 0 )";
+        String sql = "select * from tblsach ts where ts.MaSach not in( select tc.MaSach from tblchitietphieumuon tc inner join tblphieumuonsach tm on tc.MaPhieuMuon = tm.MaPhieuMuon and tm.TrangThaiXoa = 0 ) and ts.MaSach not in(select tl.MaSach from tblchitietthanhly tl where tl.MaSach = ts.MaSach)";
         TableModel md = new UserTableModel.SachTableModel(sql);
         return md;
     }
@@ -2174,8 +2177,14 @@ public class frmGUI extends javax.swing.JFrame {
         TableModel mdDanhSachThanhLy = new UserTableModel.SachTableModel(sqlDanhSachThanhLy);
         tblDanhSachSach10.setModel(mdDanhSachThanhLy);
 
-        String sqlDanhSachThanhLy10 = "select * from tblsach ts where ts.MaSach in(select tl.MaSach from tblchitietthanhly tl where tl.MaSach = ts.MaSach)";
-        TableModel mdDanhSachThanhLy10 = new UserTableModel.SachTableModel(sqlDanhSachThanhLy10);
+        String sqlDanhSachThanhLy10 = "select ts.MaSach, ts.TenSach, tc.LyDoThanhLy from tblsach ts inner join  tblchitietthanhly tc on ts.MaSach = tc.MaSach";
+        DefaultTableModel mdDanhSachThanhLy10 = new DefaultTableModel(new String[]{"STT", "Mã Sách", "Tên Sách", "Lý Do Thanh Lý"}, 0);
+        int i = 1;
+        List<Object[]> dsThanhLy = ThuanThanhLySachDAO.layDanhSachDaThanhLy(sqlDanhSachThanhLy10);
+        for (Object[] countResult : dsThanhLy) {
+            mdDanhSachThanhLy10.addRow(new Object[]{i, countResult[0], countResult[1], countResult[2]});
+            i++;
+        }
         tblDanhSachSachThanhLy10.setModel(mdDanhSachThanhLy10);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

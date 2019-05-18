@@ -6,6 +6,8 @@
 package DAO;
 
 import entity.ThuanThanhLySach;
+import java.util.List;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
@@ -29,5 +31,15 @@ public class ThuanThanhLySachDAO {
             session.close();
             return id;
         }
+    }
+    public static List<Object[]> layDanhSachDaThanhLy(String sql) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+        session.beginTransaction();
+        SQLQuery query = session.createSQLQuery(sql);
+        List<Object[]> o = query.list();
+
+        session.close();
+        return o;
     }
 }
