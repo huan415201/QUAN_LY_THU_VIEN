@@ -11,10 +11,12 @@
         <property name="hibernate.connection.password"></property>
         <property name="hibernate.current_session_context_class">thread</property>
         <mapping resource="entity/TheDocGia.hbm.xml"/>
-            <mapping resource="entity/ThuanSach.hbm.xml"/>
+        <mapping resource="entity/ThuanSach.hbm.xml"/>
         <mapping resource="entity/tblphieumuonsach.hbm.xml"/>
         <mapping resource="entity/tblchitietphieumuon.hbm.xml"/>
         <mapping resource="entity/tblphieutrasach.hbm.xml"/>
         <mapping resource="entity/ThuanNhanVien.hbm.xml"/>
+        <mapping resource="entity/ThuanThanhLySach.hbm.xml"/>
+        <mapping resource="entity/ThuanChiTietThanhLy.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

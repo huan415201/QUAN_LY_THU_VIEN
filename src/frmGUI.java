@@ -1,13 +1,17 @@
 
 import DAO.TheDocGiaDAO;
+import DAO.ThuanChiTietThanhLyDAO;
 import DAO.ThuanNhanVienDAO;
+import DAO.ThuanThanhLySachDAO;
 import DAO.tblchitietphieumuonDAO;
 import DAO.tblchitietphieutrasachDAO;
 import DAO.tblphieumuonsachDAO;
 import DAO.tblphieutrasachDAO;
 import UserTableModel.SachTableModel;
 import UserTableModel.ThuanTableModelNhanVien;
+import entity.ThuanChiTietThanhLy;
 import entity.ThuanNhanVien;
+import entity.ThuanThanhLySach;
 import entity.tblchitietphieumuon;
 import entity.tblchitietphieutra;
 import entity.tblphieumuonsach;
@@ -261,14 +265,12 @@ public class frmGUI extends javax.swing.JFrame {
 
         //Thanh ly sach
         lbThuanNhanVienThanhLy.setText(ThuanNhanVienDangNhap.getHoTen() + " - " + ThuanNhanVienDangNhap.getBoPhan());
-        if(!ThuanNhanVienDangNhap.getBoPhan().equals("Thủ Kho")){
+        if (!ThuanNhanVienDangNhap.getBoPhan().equals("Thủ Kho")) {
             btnThuanThanhLySach.setVisible(false);
         }
-        
+
         //Load sach thanh ly;
-        String sqlDanhSachThanhLy = "select * from tblsach ts where ts.MaSach not in(select tl.MaSach from tblchitietthanhly tl where tl.MaSach = ts.MaSach)";
-        TableModel mdDanhSachThanhLy = new UserTableModel.SachTableModel(sqlDanhSachThanhLy);
-        tblDanhSachSach10.setModel(mdDanhSachThanhLy);
+        ResetThanhLy(tblDanhSachSach10, tblDanhSachSachThanhLy10);
     }
 
     /**
@@ -1510,6 +1512,11 @@ public class frmGUI extends javax.swing.JFrame {
         btnThuanThanhLySach.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnThuanThanhLySach.setText("Thanh lý sách");
         btnThuanThanhLySach.setToolTipText("");
+        btnThuanThanhLySach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThuanThanhLySachActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlDanhSachSach10Layout = new javax.swing.GroupLayout(pnlDanhSachSach10);
         pnlDanhSachSach10.setLayout(pnlDanhSachSach10Layout);
@@ -1582,36 +1589,33 @@ public class frmGUI extends javax.swing.JFrame {
         pnlThanhLySachLayout.setHorizontalGroup(
             pnlThanhLySachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlThanhLySachLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlDanhSachSach10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlThanhLySachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlThanhLySachLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlDanhSachSach10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlThanhLySachLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(lbThuanNhanVienThanhLy)))
                 .addGap(18, 18, 18)
-                .addComponent(pnlDanhSachSachThanhLy10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlThanhLySachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlThanhLySachLayout.createSequentialGroup()
+                        .addComponent(lblTitle11)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(pnlDanhSachSachThanhLy10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(pnlThanhLySachLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(lbThuanNhanVienThanhLy)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnlThanhLySachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlThanhLySachLayout.createSequentialGroup()
-                    .addGap(407, 407, 407)
-                    .addComponent(lblTitle11)
-                    .addContainerGap(325, Short.MAX_VALUE)))
         );
         pnlThanhLySachLayout.setVerticalGroup(
             pnlThanhLySachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlThanhLySachLayout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addComponent(lbThuanNhanVienThanhLy)
+                .addGroup(pnlThanhLySachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbThuanNhanVienThanhLy)
+                    .addComponent(lblTitle11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlThanhLySachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlDanhSachSach10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlDanhSachSachThanhLy10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(pnlThanhLySachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlThanhLySachLayout.createSequentialGroup()
-                    .addGap(36, 36, 36)
-                    .addComponent(lblTitle11)
-                    .addContainerGap(461, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Thanh lý sách", pnlThanhLySach);
@@ -2090,6 +2094,27 @@ public class frmGUI extends javax.swing.JFrame {
         System.out.println("frmGUI.btnThem4ActionPerformed(): them thanh cong");
         KhoiTaoBangTiepNhanNhanVien(tblNhanVien4);
     }//GEN-LAST:event_btnThem4ActionPerformed
+
+    private void btnThuanThanhLySachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThuanThanhLySachActionPerformed
+        // TODO add your handling code here:
+        ThuanThanhLySach t = new ThuanThanhLySach();
+        t.setMaNhanVienLap(MaNhanVienDangNhap);
+        t.setNgayThanhLy(new Date());
+        t.setTrangThaiXoa(false);
+        int newid = ThuanThanhLySachDAO.themPhieuThanhLy(t);
+
+        ThuanChiTietThanhLy ct = new ThuanChiTietThanhLy();
+        ct.setMaPhieuThanhLy(newid);
+
+        int columnHienTai = 1;
+        int rowHienTai = tblDanhSachSach10.getSelectedRow();
+        int MaSachHienTai = Integer.parseInt(tblDanhSachSach10.getModel().getValueAt(rowHienTai, columnHienTai).toString());
+        ct.setMaSach(MaSachHienTai);
+        ct.setLyDoThanhLy(cboLyDoThanhLy10.getSelectedItem().toString());
+        ThuanChiTietThanhLyDAO.themChiTietPhieuThanhLy(ct);
+       //  System.out.println("frmGUI.btnThuanThanhLySachActionPerformed() MaSachHienTai: " + MaSachHienTai);
+        ResetThanhLy(tblDanhSachSach10, tblDanhSachSachThanhLy10);
+    }//GEN-LAST:event_btnThuanThanhLySachActionPerformed
     //Lam tiep nhan nhanvien
     public static void KhoiTaoBangTiepNhanNhanVien(JTable tbNhanVien4) {
         tbNhanVien4.setModel(new ThuanTableModelNhanVien("select* from tblnhanvien"));
@@ -2142,7 +2167,17 @@ public class frmGUI extends javax.swing.JFrame {
         return md;
     }
     //phieu tra sach
+    //
 
+    private static void ResetThanhLy(JTable tblDanhSachSach10, JTable tblDanhSachSachThanhLy10) {
+        String sqlDanhSachThanhLy = "select * from tblsach ts where ts.MaSach not in(select tl.MaSach from tblchitietthanhly tl where tl.MaSach = ts.MaSach)";
+        TableModel mdDanhSachThanhLy = new UserTableModel.SachTableModel(sqlDanhSachThanhLy);
+        tblDanhSachSach10.setModel(mdDanhSachThanhLy);
+
+        String sqlDanhSachThanhLy10 = "select * from tblsach ts where ts.MaSach in(select tl.MaSach from tblchitietthanhly tl where tl.MaSach = ts.MaSach)";
+        TableModel mdDanhSachThanhLy10 = new UserTableModel.SachTableModel(sqlDanhSachThanhLy10);
+        tblDanhSachSachThanhLy10.setModel(mdDanhSachThanhLy10);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuuPhieu;
     private javax.swing.JButton btnThayMatKhau8;
