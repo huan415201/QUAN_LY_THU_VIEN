@@ -48,13 +48,19 @@ public class SachTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         ThuanSach p = PersonList.get(rowIndex);
-        Object[] values = new Object[]{rowIndex+1, p.getMaSach(), p.getTenSach(), p.getTheLoai(), p.getTacGia(), p.getTrangThaiXoa()};
+        String TinhTrangSach = "";
+        if(p.getTrangThaiXoa() == 0){
+            TinhTrangSach = "Đang sữ dụng";
+        }else{
+            TinhTrangSach = "Hết sữ dụng";
+        }
+        Object[] values = new Object[]{rowIndex+1, p.getMaSach(), p.getTenSach(), p.getTheLoai(), p.getTacGia(), TinhTrangSach};
         return values[columnIndex];
     }
 
     @Override
     public String getColumnName(int column) {
-        String[] columnNames = new String[]{"STT", "Ma Sach", "Ten Sach", "The Loai", "Tac gia", "Tinh Trang"};
+        String[] columnNames = new String[]{"STT", "Mã Sách", "Tên Sach", "Thể Loại", "Tác gia", "Tình Trạng"};
         return columnNames[column];
     }
 }
