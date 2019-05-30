@@ -7,10 +7,7 @@ package entity;
 
 import java.util.Date;
 
-/**
- *
- * @author hau
- */
+
 public class ThuanSach {
     private int MaSach;
     private int MaNhanVienTiepNhan;
