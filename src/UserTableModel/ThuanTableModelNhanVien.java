@@ -5,28 +5,28 @@
  */
 package UserTableModel;
 
-import entity.ThuanSach;
+import entity.ThuanNhanVien;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 import java.util.*;
 import javax.swing.table.AbstractTableModel;
 
-public class SachTableModel extends AbstractTableModel {
+public class ThuanTableModelNhanVien extends AbstractTableModel {
 
     private static final long serialVersionUID = 6105842825518764825L;
-    private ArrayList<ThuanSach> PersonList;
+    private ArrayList<ThuanNhanVien> PersonList;
 
-    public SachTableModel(String sql) {
+    public ThuanTableModelNhanVien(String sql) {
         super();
         SessionFactory sf = new Configuration().configure().buildSessionFactory();
         Session session = sf.openSession();
 
-        Query q = session.createSQLQuery(sql).addEntity(ThuanSach.class);
+        Query q = session.createSQLQuery(sql).addEntity(ThuanNhanVien.class);
         
         List tmp = q.list();
-        PersonList = new ArrayList<ThuanSach>();
+        PersonList = new ArrayList<ThuanNhanVien>();
         for (int i = 0; i < tmp.size(); i++) {
-            PersonList.add((ThuanSach) tmp.get(i));
+            PersonList.add((ThuanNhanVien) tmp.get(i));
         }
         
         session.close();
@@ -38,25 +38,19 @@ public class SachTableModel extends AbstractTableModel {
     }
 
     public int getColumnCount() {
-        return 6;
+        return 8;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        ThuanSach p = PersonList.get(rowIndex);
-        String TinhTrangSach = "";
-        if(p.getTrangThaiXoa() == 0){
-            TinhTrangSach = "Đang sữ dụng";
-        }else{
-            TinhTrangSach = "Hết sữ dụng";
-        }
-        Object[] values = new Object[]{rowIndex+1, p.getMaSach(), p.getTenSach(), p.getTheLoai(), p.getTacGia(), TinhTrangSach};
+        ThuanNhanVien p = PersonList.get(rowIndex);
+        Object[] values = new Object[]{rowIndex+1, p.getHoTen(), p.getNgaySinh(), p.getLoaiBangCap(), p.getChucVu(), p.getDiaChi(), p.getSoDienThoai(), p.getBoPhan()};
         return values[columnIndex];
     }
 
     @Override
     public String getColumnName(int column) {
-        String[] columnNames = new String[]{"STT", "Mã Sách", "Tên Sach", "Thể Loại", "Tác gia", "Tình Trạng"};
+        String[] columnNames = new String[]{"STT", "Họ Tên", "NgàySinh", "Loại Bằng Cấp", "Chức vụ", "Địa Chỉ", "Số Điện Thoại", "Bộ Phận"};
         return columnNames[column];
     }
 }
