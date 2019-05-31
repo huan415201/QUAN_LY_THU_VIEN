@@ -1,3 +1,8 @@
+
+import DAO.ThuanNhanVienDAO;
+import javax.swing.JOptionPane;
+import tools.NhanVienComboModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,11 +11,12 @@
 
 public class frmDangNhap extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frmDangNhap
-     */
+    String[] dsNhanVien = ThuanNhanVienDAO.layDanhSachTenNhanVien();
+    NhanVienComboModel cbModelNhanVien;
     public frmDangNhap() {
         initComponents();
+        cbModelNhanVien = new NhanVienComboModel(dsNhanVien);
+        cboHoTenNhanVien.setModel(cbModelNhanVien);
     }
 
     /**
@@ -98,7 +104,18 @@ public class frmDangNhap extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        
+        int maNhanVien = cboHoTenNhanVien.getSelectedIndex() + 1;
+        String matKhauNhanVien = ThuanNhanVienDAO.LayMatKhauBangMaNhanVien(maNhanVien);
+        String matKhauNhap = psfMatKhau.getText();
+        System.out.println(matKhauNhap + " - " + matKhauNhanVien);
+        if (!matKhauNhap.equals(matKhauNhanVien)) {
+            JOptionPane.showMessageDialog(null, "Mật khẩu không đúng!", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else {
+            frmGUI formGUI = new frmGUI(maNhanVien); 
+            formGUI.show();
+            dispose();
+        }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**
