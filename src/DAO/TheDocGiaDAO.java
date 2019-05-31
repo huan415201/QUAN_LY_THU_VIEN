@@ -64,6 +64,7 @@ public class TheDocGiaDAO {
         session.close();
         return lstDSMON;
     }
+
     public static String[] layDanhSachTenDocGia() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         ArrayList<String> lst = new ArrayList<>();
@@ -81,12 +82,11 @@ public class TheDocGiaDAO {
         session.close();
         return lstDSMON;
     }
-    
-    
+
     public static Date layNgayLapBangMaThe(String MaThe) {
-        
+
         Date d = null;
-        
+
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
         session.beginTransaction();
@@ -101,5 +101,37 @@ public class TheDocGiaDAO {
         }
         session.close();
         return d;
+    }
+
+    public static int layTienNoBangMaThe(String MaThe) {
+
+        int d = 0;
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+        session.beginTransaction();
+        String sql = "SELECT * FROM tblthedocgia where MaTheDocGia =:o";
+        SQLQuery query = session.createSQLQuery(sql);
+        query.setParameter("o", MaThe);
+        query.addEntity(TheDocGia.class);
+        List employees = query.list();
+        for (Iterator iterator = employees.iterator(); iterator.hasNext();) {
+            TheDocGia employee = (TheDocGia) iterator.next();
+            d = employee.getTienNo();
+        }
+        session.close();
+        return d;
+    }
+
+    public static void updateTienNo(String MaTheDocGia, String TienNo) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+        session.beginTransaction();
+        Query query = session.createSQLQuery(
+                "update tblthedocgia set TienNo =:TienNo where MaTheDocGia =:MaTheDocGia");
+        query.setParameter("TienNo", TienNo);
+        query.setParameter("MaTheDocGia", MaTheDocGia);
+        query.executeUpdate();
+        session.close();
     }
 }

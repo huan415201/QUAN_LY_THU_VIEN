@@ -5,10 +5,6 @@
  */
 package tools;
 
-/**
- *
- * @author hau
- */
 import javax.swing.DefaultComboBoxModel;
 
 public class TheDocGiaComboModel extends DefaultComboBoxModel<String> {

@@ -7,10 +7,6 @@ package tools;
 
 import java.util.Calendar;
 
-/**
- *
- * @author hau
- */
 public class TinhThang {
 
     public static boolean isSixMonthsAgo(Calendar referenceDate, Calendar dateToBeTested) {
