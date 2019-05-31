@@ -4,10 +4,6 @@
  * and open the template in the editor.
  */
 
-/**
- *
- * @author Huan
- */
 public class frmDangNhap extends javax.swing.JFrame {
 
     /**
@@ -50,6 +46,11 @@ public class frmDangNhap extends javax.swing.JFrame {
         btnDangNhap.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnDangNhap.setText("Đăng Nhập");
         btnDangNhap.setToolTipText("");
+        btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDangNhapActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,6 +96,10 @@ public class frmDangNhap extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+        
+    }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**
      * @param args the command line arguments
