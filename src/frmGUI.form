@@ -540,6 +540,9 @@
                     <Property name="text" type="java.lang.String" value="L&#x1ead;p Th&#x1ebb;"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThem3ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="dtpNgaySinh3">
                 </Component>

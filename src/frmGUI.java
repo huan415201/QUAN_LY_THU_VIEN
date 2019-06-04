@@ -8,7 +8,9 @@ import DAO.tblchitietphieutrasachDAO;
 import DAO.tblphieumuonsachDAO;
 import DAO.tblphieutrasachDAO;
 import UserTableModel.SachTableModel;
+import UserTableModel.TheDocGiaTableModel;
 import UserTableModel.ThuanTableModelNhanVien;
+import entity.TheDocGia;
 import entity.ThuanChiTietThanhLy;
 import entity.ThuanNhanVien;
 import entity.ThuanThanhLySach;
@@ -268,6 +270,9 @@ public class frmGUI extends javax.swing.JFrame {
 
         //Load sach thanh ly;
         ResetThanhLy(tblDanhSachSach10, tblDanhSachSachThanhLy10);
+        
+        //The doc gia
+        tblTheDocGia3.setModel( new TheDocGiaTableModel("SELECT * FROM tblthedocgia"));
     }
 
     /**
@@ -638,6 +643,11 @@ public class frmGUI extends javax.swing.JFrame {
         btnThem3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnThem3.setText("Lập Thẻ");
         btnThem3.setToolTipText("");
+        btnThem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThem3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlThongTinThe3Layout = new javax.swing.GroupLayout(pnlThongTinThe3);
         pnlThongTinThe3.setLayout(pnlThongTinThe3Layout);
@@ -2110,6 +2120,27 @@ public class frmGUI extends javax.swing.JFrame {
         //  System.out.println("frmGUI.btnThuanThanhLySachActionPerformed() MaSachHienTai: " + MaSachHienTai);
         ResetThanhLy(tblDanhSachSach10, tblDanhSachSachThanhLy10);
     }//GEN-LAST:event_btnThuanThanhLySachActionPerformed
+
+    private void btnThem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem3ActionPerformed
+        if (txtHoTen3.getText().equals("") || txtDiaChi3.getText().equals("") || txtEmail3.getText().equals("") || dtpNgaySinh3.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else {
+            TheDocGia the = new TheDocGia();
+            the.setMaNhanVienLap(MaNhanVienDangNhap);
+            the.setLoaiDocGia(cboLoaiDocGia3.getSelectedItem().toString());
+            the.setHoTen(txtHoTen3.getText());
+            the.setDiaChi(txtDiaChi3.getText());
+            the.setEmail(txtEmail3.getText());
+            the.setNgaySinh(dtpNgaySinh3.getDate());
+            the.setNgayLapThe(new Date());
+            the.setTienNo(0);
+            the.setTrangThaiXoa(false);
+            TheDocGiaDAO.ThemTheDocGia(the);
+            JOptionPane.showMessageDialog(null, "Thêm thẻ đọc viên thành công!", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+            tblTheDocGia3.setModel( new TheDocGiaTableModel("SELECT * FROM tblthedocgia"));
+        }
+    }//GEN-LAST:event_btnThem3ActionPerformed
     //Lam tiep nhan nhanvien
     public static void KhoiTaoBangTiepNhanNhanVien(JTable tbNhanVien4) {
         tbNhanVien4.setModel(new ThuanTableModelNhanVien("select* from tblnhanvien"));

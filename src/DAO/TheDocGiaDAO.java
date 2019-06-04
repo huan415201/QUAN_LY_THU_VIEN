@@ -33,6 +33,8 @@ public class TheDocGiaDAO {
 
     public static int ThemTheDocGia(TheDocGia the) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        
         Query query = session.createSQLQuery("INSERT INTO tblthedocgia (MaNhanVienLap, LoaiDocGia, HoTen, DiaChi, Email, NgaySinh, NgayLapThe, TienNo, TrangThaiXoa)"
                 + "VALUES (:MaNhanVienLap, :LoaiDocGia, :HoTen, :DiaChi, :Email, :NgaySinh, :NgayLapThe, :TienNo, :TrangThaiXoa)");
         query.setParameter("MaNhanVienLap", the.getMaNhanVienLap());
