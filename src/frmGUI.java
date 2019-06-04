@@ -272,7 +272,7 @@ public class frmGUI extends javax.swing.JFrame {
         ResetThanhLy(tblDanhSachSach10, tblDanhSachSachThanhLy10);
         
         //The doc gia
-        tblTheDocGia3.setModel( new TheDocGiaTableModel("SELECT * FROM tblthedocgia"));
+        tblTheDocGia3.setModel( new TheDocGiaTableModel("SELECT * FROM tblthedocgia WHERE TrangThaiXoa=0"));
     }
 
     /**
@@ -324,6 +324,8 @@ public class frmGUI extends javax.swing.JFrame {
         pnlDanhSachTheDocGia3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblTheDocGia3 = new javax.swing.JTable();
+        btnXoa3 = new javax.swing.JButton();
+        btnThem8 = new javax.swing.JButton();
         pnlTiepNhanNhanVien = new javax.swing.JPanel();
         lblTitle4 = new javax.swing.JLabel();
         pnlThongTinNhanVien4 = new javax.swing.JPanel();
@@ -714,24 +716,44 @@ public class frmGUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblTheDocGia3.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(tblTheDocGia3);
+
+        btnXoa3.setBackground(new java.awt.Color(255, 153, 153));
+        btnXoa3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnXoa3.setText("Xóa");
+        btnXoa3.setToolTipText("");
+        btnXoa3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoa3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlDanhSachTheDocGia3Layout = new javax.swing.GroupLayout(pnlDanhSachTheDocGia3);
         pnlDanhSachTheDocGia3.setLayout(pnlDanhSachTheDocGia3Layout);
         pnlDanhSachTheDocGia3Layout.setHorizontalGroup(
             pnlDanhSachTheDocGia3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDanhSachTheDocGia3Layout.createSequentialGroup()
+            .addGroup(pnlDanhSachTheDocGia3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                .addGroup(pnlDanhSachTheDocGia3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                    .addComponent(btnXoa3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlDanhSachTheDocGia3Layout.setVerticalGroup(
             pnlDanhSachTheDocGia3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDanhSachTheDocGia3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnXoa3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btnThem8.setBackground(new java.awt.Color(204, 255, 204));
+        btnThem8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnThem8.setText("Lập Thẻ");
+        btnThem8.setToolTipText("");
 
         javax.swing.GroupLayout pnlLapTheDocGiaLayout = new javax.swing.GroupLayout(pnlLapTheDocGia);
         pnlLapTheDocGia.setLayout(pnlLapTheDocGiaLayout);
@@ -747,6 +769,11 @@ public class frmGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblTitle3)
                 .addGap(249, 249, 249))
+            .addGroup(pnlLapTheDocGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlLapTheDocGiaLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(btnThem8)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         pnlLapTheDocGiaLayout.setVerticalGroup(
             pnlLapTheDocGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -758,6 +785,11 @@ public class frmGUI extends javax.swing.JFrame {
                     .addComponent(pnlThongTinThe3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlDanhSachTheDocGia3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(131, Short.MAX_VALUE))
+            .addGroup(pnlLapTheDocGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlLapTheDocGiaLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(btnThem8)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Lập thẻ đọc giả", pnlLapTheDocGia);
@@ -2138,9 +2170,23 @@ public class frmGUI extends javax.swing.JFrame {
             the.setTrangThaiXoa(false);
             TheDocGiaDAO.ThemTheDocGia(the);
             JOptionPane.showMessageDialog(null, "Thêm thẻ đọc viên thành công!", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
-            tblTheDocGia3.setModel( new TheDocGiaTableModel("SELECT * FROM tblthedocgia"));
+            tblTheDocGia3.setModel( new TheDocGiaTableModel("SELECT * FROM tblthedocgia WHERE TrangThaiXoa=0"));
         }
     }//GEN-LAST:event_btnThem3ActionPerformed
+
+    private void btnXoa3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoa3ActionPerformed
+        int chon = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa?");
+        if (chon == 0) {
+            //Lay email cua dong dang chon
+            int selectedRowIndex = tblTheDocGia3.getSelectedRow();
+            String email = tblTheDocGia3.getModel().getValueAt(selectedRowIndex, 4).toString();
+            System.out.println(email);
+            
+            //Xoa dong theo email
+            TheDocGiaDAO.updateTrangThaiXoa(email);
+            tblTheDocGia3.setModel( new TheDocGiaTableModel("SELECT * FROM tblthedocgia WHERE TrangThaiXoa=0"));
+        }
+    }//GEN-LAST:event_btnXoa3ActionPerformed
     //Lam tiep nhan nhanvien
     public static void KhoiTaoBangTiepNhanNhanVien(JTable tbNhanVien4) {
         tbNhanVien4.setModel(new ThuanTableModelNhanVien("select* from tblnhanvien"));
@@ -2183,7 +2229,7 @@ public class frmGUI extends javax.swing.JFrame {
     }
 
     private static TableModel createTableModel() {
-        TableModel md = new UserTableModel.SachTableModel("select * from tblSach");
+        TableModel md = new UserTableModel.SachTableModel("select * from tblSach WHERE TrangThaiXoa=0");
         return md;
     }
 
@@ -2219,9 +2265,11 @@ public class frmGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnThem5;
     private javax.swing.JButton btnThem6;
     private javax.swing.JButton btnThem7;
+    private javax.swing.JButton btnThem8;
     private javax.swing.JButton btnThuanThanhLySach;
     private javax.swing.JButton btnTraSach;
     private javax.swing.JButton btnXoa;
+    private javax.swing.JButton btnXoa3;
     private javax.swing.JComboBox<String> cbbMaTheDocGia;
     private javax.swing.JComboBox<String> cbbPhieuTraPhieuMuon;
     private javax.swing.JComboBox<String> cbbPhieuTraSachHoTen;

@@ -127,12 +127,23 @@ public class TheDocGiaDAO {
 
     public static void updateTienNo(String MaTheDocGia, String TienNo) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
         session.beginTransaction();
+        
         Query query = session.createSQLQuery(
                 "update tblthedocgia set TienNo =:TienNo where MaTheDocGia =:MaTheDocGia");
         query.setParameter("TienNo", TienNo);
         query.setParameter("MaTheDocGia", MaTheDocGia);
+        query.executeUpdate();
+        session.close();
+    }
+    
+    public static void updateTrangThaiXoa(String email) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        
+         Query query = session.createSQLQuery(
+                "update tblthedocgia set TrangThaiXoa=1 where Email =:Email");
+        query.setParameter("Email", email);
         query.executeUpdate();
         session.close();
     }
