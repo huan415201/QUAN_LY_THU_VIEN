@@ -159,4 +159,20 @@ public class TheDocGiaDAO {
         query.executeUpdate();
         session.close();
     }
+
+    public static void updateTheDocGia(TheDocGia the, String emailCu) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+
+        Query query = session.createSQLQuery(
+                "UPDATE tblthedocgia SET LoaiDocGia=:LoaiDocGia, HoTen=:HoTen, DiaChi=:DiaChi, Email=:EmailMoi, NgaySinh=:NgaySinh WHERE Email=:EmailCu");
+        query.setParameter("LoaiDocGia", the.getLoaiDocGia());
+        query.setParameter("HoTen", the.getHoTen());
+        query.setParameter("DiaChi", the.getDiaChi());
+        query.setParameter("EmailMoi", the.getEmail());
+        query.setParameter("NgaySinh", the.getNgaySinh());
+        query.setParameter("EmailCu", emailCu);
+        query.executeUpdate();
+        session.close();
+    }
 }

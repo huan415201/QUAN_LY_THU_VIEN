@@ -7,18 +7,18 @@ package entity;
 
 import java.util.Date;
 
-
 public class ThuanSach {
+
     private int MaSach;
     private int MaNhanVienTiepNhan;
     private String TenSach;
     private String TheLoai;
     private String TacGia;
-    private int  NamXuatBan;
+    private int NamXuatBan;
     private String NhaXuatBan;
-    private Date  NgayNhap;
+    private Date NgayNhap;
     private int TriGia;
-    private int TrangThaiXoa;
+    private boolean TrangThaiXoa;
 
     public int getMaSach() {
         return MaSach;
@@ -56,7 +56,7 @@ public class ThuanSach {
         return TriGia;
     }
 
-    public int getTrangThaiXoa() {
+    public boolean getTrangThaiXoa() {
         return TrangThaiXoa;
     }
 
@@ -96,11 +96,11 @@ public class ThuanSach {
         this.TriGia = TriGia;
     }
 
-    public void setTrangThaiXoa(int TrangThaiXoa) {
+    public void setTrangThaiXoa(boolean TrangThaiXoa) {
         this.TrangThaiXoa = TrangThaiXoa;
     }
 
-    public ThuanSach(int MaSach, int MaNhanVienTiepNhan, String TenSach, String TheLoai, String TacGia, int NamXuatBan, String NhaXuatBan, Date NgayNhap, int TriGia, int TrangThaiXoa) {
+    public ThuanSach(int MaSach, int MaNhanVienTiepNhan, String TenSach, String TheLoai, String TacGia, int NamXuatBan, String NhaXuatBan, Date NgayNhap, int TriGia, boolean TrangThaiXoa) {
         this.MaSach = MaSach;
         this.MaNhanVienTiepNhan = MaNhanVienTiepNhan;
         this.TenSach = TenSach;

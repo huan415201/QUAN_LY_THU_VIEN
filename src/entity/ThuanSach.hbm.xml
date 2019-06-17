@@ -32,7 +32,7 @@
         <property name="TriGia" type="int">
             <column name="TriGia" />
         </property>
-        <property name="TrangThaiXoa" type="int">
+        <property name="TrangThaiXoa" type="boolean">
             <column name="TrangThaiXoa" />
         </property>
     </class>
