@@ -32,21 +32,33 @@ public class TheDocGiaDAO {
     }
 
     public static int ThemTheDocGia(TheDocGia the) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        
-        Query query = session.createSQLQuery("INSERT INTO tblthedocgia (MaNhanVienLap, LoaiDocGia, HoTen, DiaChi, Email, NgaySinh, NgayLapThe, TienNo, TrangThaiXoa)"
-                + "VALUES (:MaNhanVienLap, :LoaiDocGia, :HoTen, :DiaChi, :Email, :NgaySinh, :NgayLapThe, :TienNo, :TrangThaiXoa)");
-        query.setParameter("MaNhanVienLap", the.getMaNhanVienLap());
-        query.setParameter("LoaiDocGia", the.getLoaiDocGia());
-        query.setParameter("HoTen", the.getHoTen());
-        query.setParameter("DiaChi", the.getDiaChi());
-        query.setParameter("Email", the.getEmail());
-        query.setParameter("NgaySinh", the.getNgaySinh());
-        query.setParameter("NgayLapThe", the.getNgayLapThe());
-        query.setParameter("TienNo", the.getTienNo());
-        query.setParameter("TrangThaiXoa", false);
-        return query.executeUpdate();
+        int id = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            id = (int) session.save(the);
+            System.out.println("id moi: " + id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            System.out.println(e);
+        } finally {
+            session.close();
+            return id;
+        }
+//
+//        Query query = session.createSQLQuery("INSERT INTO tblthedocgia (MaNhanVienLap, LoaiDocGia, HoTen, DiaChi, Email, NgaySinh, NgayLapThe, TienNo, TrangThaiXoa)"
+//                + "VALUES (:MaNhanVienLap, :LoaiDocGia, :HoTen, :DiaChi, :Email, :NgaySinh, :NgayLapThe, :TienNo, :TrangThaiXoa)");
+//        query.setParameter("MaNhanVienLap", the.getMaNhanVienLap());
+//        query.setParameter("LoaiDocGia", the.getLoaiDocGia());
+//        query.setParameter("HoTen", the.getHoTen());
+//        query.setParameter("DiaChi", the.getDiaChi());
+//        query.setParameter("Email", the.getEmail());
+//        query.setParameter("NgaySinh", the.getNgaySinh());
+//        query.setParameter("NgayLapThe", the.getNgayLapThe());
+//        query.setParameter("TienNo", the.getTienNo());
+//        query.setParameter("TrangThaiXoa", false);
+//        return query.executeUpdate();
     }
 
     public static String[] layDanhSachMaTheDocGia() {
@@ -128,7 +140,7 @@ public class TheDocGiaDAO {
     public static void updateTienNo(String MaTheDocGia, String TienNo) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        
+
         Query query = session.createSQLQuery(
                 "update tblthedocgia set TienNo =:TienNo where MaTheDocGia =:MaTheDocGia");
         query.setParameter("TienNo", TienNo);
@@ -136,12 +148,12 @@ public class TheDocGiaDAO {
         query.executeUpdate();
         session.close();
     }
-    
+
     public static void updateTrangThaiXoa(String email) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        
-         Query query = session.createSQLQuery(
+
+        Query query = session.createSQLQuery(
                 "update tblthedocgia set TrangThaiXoa=1 where Email =:Email");
         query.setParameter("Email", email);
         query.executeUpdate();

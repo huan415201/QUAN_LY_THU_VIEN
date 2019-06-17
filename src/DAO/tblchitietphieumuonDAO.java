@@ -1,12 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import entity.tblchitietphieumuon;
+import java.util.Iterator;
+import java.util.List;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
@@ -25,7 +23,7 @@ public class tblchitietphieumuonDAO {
             session.close();
         }
     }
-    
+
     public static void updateXoaMuon(String MaPhieuMuon) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
@@ -35,5 +33,20 @@ public class tblchitietphieumuonDAO {
         query.setParameter("MaPhieuMuon", MaPhieuMuon);
         query.executeUpdate();
         session.close();
+    }
+
+    public static List<tblchitietphieumuon> LayCTPMTheoMaPM(int maPhieuMuon) {
+        List<tblchitietphieumuon> kq = null;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//        session.beginTransaction();
+
+        String sql = "SELECT ctpm.*, s.TenSach FROM tblchitietphieumuon ctpm INNER JOIN tblsach s ON ctpm.MaSach=s.MaSach where ctpm.MaPhieuMuon=:m";
+        SQLQuery query = session.createSQLQuery(sql);
+
+        query.setParameter("m", maPhieuMuon);
+        query.addEntity(tblchitietphieumuon.class);
+        kq = query.list();
+        session.close();
+        return kq;
     }
 }

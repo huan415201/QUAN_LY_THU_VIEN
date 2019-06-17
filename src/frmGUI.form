@@ -1227,6 +1227,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Ti&#x1ebf;p Nh&#x1ead;n S&#xe1;ch"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThem5ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblNgayNhap5">
                   <Properties>
@@ -2053,6 +2056,9 @@
                 <Property name="text" type="java.lang.String" value="Thay &#x110;&#x1ed5;i M&#x1ead;t Kh&#x1ea9;u"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThayMatKhau8ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -137,4 +137,15 @@ public class tblphieumuonsachDAO {
         query.executeUpdate();
         session.close();
     }
+
+    public static int LayMaPhieuMuonMoiNhatTheoMaDocGia(int maTheDocGia) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        String sql = "SELECT MAX(MaPhieuMuon) AS MaPhieuMuonMAX FROM tblphieumuonsach WHERE MaTheDocGia=:m";
+        SQLQuery query = session.createSQLQuery(sql);
+        query.setParameter("m", maTheDocGia);
+        List<String> tmp = query.list();
+        String kq = tmp.toString().substring(1, 3);
+        return Integer.parseInt(kq);
+    }
 }

@@ -8,5 +8,6 @@
             <key-property name="MaPhieuMuon" column="MaPhieuMuon" />
             <key-property name="MaSach" column="MaSach" />
         </composite-id>
+        <property name="TenSach" type="string" column="TenSach" />
     </class>
 </hibernate-mapping>

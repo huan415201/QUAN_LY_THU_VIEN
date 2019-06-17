@@ -10,6 +10,7 @@ import DAO.tblphieutrasachDAO;
 import UserTableModel.SachTableModel;
 import UserTableModel.TheDocGiaTableModel;
 import UserTableModel.ThuanTableModelNhanVien;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import entity.TheDocGia;
 import entity.ThuanChiTietThanhLy;
 import entity.ThuanNhanVien;
@@ -26,7 +27,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -37,15 +40,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
+import tools.DataBean;
+import tools.DataBeanList;
 import tools.TheDocGiaComboModel;
 import tools.TinhThang;
+import tools.mainmain;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 public class frmGUI extends javax.swing.JFrame {
 
     public static String bundlea = "abc";
@@ -86,7 +98,11 @@ public class frmGUI extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         //Hien sach con lai
-        String[] DSPhieuMuonHienTai = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGia(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()], new Date());
+        String[] DSPhieuMuonHienTai = null;
+        if (cbbMaTheDocGia.getSelectedIndex() != -1) {
+            DSPhieuMuonHienTai = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGia(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()], new Date());
+        }
+
         SoSachDaMuon = DSPhieuMuonHienTai.length;
         txtSoSachConLai.setText(String.valueOf(SoSachDaMuon));
 
@@ -270,9 +286,9 @@ public class frmGUI extends javax.swing.JFrame {
 
         //Load sach thanh ly;
         ResetThanhLy(tblDanhSachSach10, tblDanhSachSachThanhLy10);
-        
+
         //The doc gia
-        tblTheDocGia3.setModel( new TheDocGiaTableModel("SELECT * FROM tblthedocgia WHERE TrangThaiXoa=0"));
+        tblTheDocGia3.setModel(new TheDocGiaTableModel("SELECT * FROM tblthedocgia WHERE TrangThaiXoa=0"));
     }
 
     /**
@@ -454,6 +470,7 @@ public class frmGUI extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jLabel1.setText("Tìm kiếm");
 
@@ -613,7 +630,7 @@ public class frmGUI extends javax.swing.JFrame {
         lblTitle3.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
         lblTitle3.setText("Lập Thẻ Độc Giả");
 
-        pnlThongTinThe3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông Tin Thẻ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
+        pnlThongTinThe3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông Tin Thẻ", 0, 0, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
         pnlThongTinThe3.setToolTipText("");
         pnlThongTinThe3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
@@ -703,7 +720,7 @@ public class frmGUI extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        pnlDanhSachTheDocGia3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Thẻ Đọc Giả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18))); // NOI18N
+        pnlDanhSachTheDocGia3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Thẻ Đọc Giả", 0, 0, new java.awt.Font("Times New Roman", 0, 18))); // NOI18N
 
         tblTheDocGia3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -797,7 +814,7 @@ public class frmGUI extends javax.swing.JFrame {
         lblTitle4.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
         lblTitle4.setText("Tiếp Nhận Nhân Viên");
 
-        pnlThongTinNhanVien4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông Tin Nhân Viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
+        pnlThongTinNhanVien4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông Tin Nhân Viên", 0, 0, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
         pnlThongTinNhanVien4.setToolTipText("");
         pnlThongTinNhanVien4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
@@ -916,7 +933,7 @@ public class frmGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pblDanhSachNhanVien4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Nhân Viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18))); // NOI18N
+        pblDanhSachNhanVien4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Nhân Viên", 0, 0, new java.awt.Font("Times New Roman", 0, 18))); // NOI18N
 
         tblNhanVien4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -993,7 +1010,7 @@ public class frmGUI extends javax.swing.JFrame {
         lblTitle5.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
         lblTitle5.setText("Tiếp Nhận Sách");
 
-        pnlThongTinSach5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông Tin Sách", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
+        pnlThongTinSach5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông Tin Sách", 0, 0, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
         pnlThongTinSach5.setToolTipText("");
         pnlThongTinSach5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
@@ -1011,6 +1028,11 @@ public class frmGUI extends javax.swing.JFrame {
         btnThem5.setBackground(new java.awt.Color(204, 255, 204));
         btnThem5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnThem5.setText("Tiếp Nhận Sách");
+        btnThem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThem5ActionPerformed(evt);
+            }
+        });
 
         lblNgayNhap5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblNgayNhap5.setText("Ngày nhập:");
@@ -1100,7 +1122,7 @@ public class frmGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pblDanhSachSach5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Sách", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18))); // NOI18N
+        pblDanhSachSach5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Sách", 0, 0, new java.awt.Font("Times New Roman", 0, 18))); // NOI18N
 
         tblSach5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1164,7 +1186,7 @@ public class frmGUI extends javax.swing.JFrame {
         lblTitle6.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
         lblTitle6.setText("Lập Phiếu Phạt");
 
-        pnlThongTinPhieuPhat6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông Tin Phiếu Phạt", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
+        pnlThongTinPhieuPhat6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông Tin Phiếu Phạt", 0, 0, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
         pnlThongTinPhieuPhat6.setToolTipText("");
         pnlThongTinPhieuPhat6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
@@ -1252,7 +1274,7 @@ public class frmGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlDanhSachPhieuPhat6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Phiếu Phạt", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18))); // NOI18N
+        pnlDanhSachPhieuPhat6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Phiếu Phạt", 0, 0, new java.awt.Font("Times New Roman", 0, 18))); // NOI18N
 
         tblPhieuPhat6.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1318,7 +1340,7 @@ public class frmGUI extends javax.swing.JFrame {
         lblTitle7.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
         lblTitle7.setText("Ghi Nhận Mất Sách");
 
-        pnlThongTinSachMat6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông Tin Sách Bị Mất", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
+        pnlThongTinSachMat6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông Tin Sách Bị Mất", 0, 0, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
         pnlThongTinSachMat6.setToolTipText("");
         pnlThongTinSachMat6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
@@ -1402,7 +1424,7 @@ public class frmGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlDanhSachPhieuPhat7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Sách Bị Mất", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 18))); // NOI18N
+        pnlDanhSachPhieuPhat7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Sách Bị Mất", 0, 0, new java.awt.Font("Times New Roman", 0, 18))); // NOI18N
 
         tblPhieuPhat7.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1478,6 +1500,11 @@ public class frmGUI extends javax.swing.JFrame {
         btnThayMatKhau8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnThayMatKhau8.setText("Thay Đổi Mật Khẩu");
         btnThayMatKhau8.setToolTipText("");
+        btnThayMatKhau8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThayMatKhau8ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlThayMatKhauLayout = new javax.swing.GroupLayout(pnlThayMatKhau);
         pnlThayMatKhau.setLayout(pnlThayMatKhauLayout);
@@ -1524,7 +1551,7 @@ public class frmGUI extends javax.swing.JFrame {
         lbThuanNhanVienThanhLy.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
         lbThuanNhanVienThanhLy.setText("Thanh Lý Sách");
 
-        pnlDanhSachSach10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Sách", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
+        pnlDanhSachSach10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Sách", 0, 0, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
         pnlDanhSachSach10.setToolTipText("");
         pnlDanhSachSach10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
@@ -1586,7 +1613,7 @@ public class frmGUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pnlDanhSachSachThanhLy10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Sách Thanh Lý", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
+        pnlDanhSachSachThanhLy10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Sách Thanh Lý", 0, 0, new java.awt.Font("Times New Roman", 0, 20))); // NOI18N
         pnlDanhSachSachThanhLy10.setToolTipText("");
         pnlDanhSachSachThanhLy10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
@@ -1887,6 +1914,8 @@ public class frmGUI extends javax.swing.JFrame {
 
             int MaSach = Integer.parseInt(tbMuon.getModel().getValueAt(i, 1).toString());
             ct.setMaSach(MaSach);
+            String TenSach = tbMuon.getModel().getValueAt(i, 2).toString();
+            ct.setTenSach(TenSach);
             tblchitietphieumuonDAO.ThemChiTieuPhieuMuon(ct);
         }
         DefaultTableModel dmXoa = (DefaultTableModel) tbMuon.getModel();
@@ -1900,20 +1929,20 @@ public class frmGUI extends javax.swing.JFrame {
         txtLoi.setText("Thêm phiếu mượn thành công!");
 
         //---phieu tra sach
-        String[] dsTheMuonBangMaTheDocGia = null;
+        String[] dsPhieuMuonBangMaTheDocGia = null;
 
         Boolean coTraCoPhieuMuonSach = false;
         //Bat su kien ben tra
         TheDocGiaComboModel combomodeldsTheMuonBangMaTheDocGia;
-        dsTheMuonBangMaTheDocGia = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGiaDistinct(dsMaTheDocGia[cbbPhieuTraSachHoTen.getSelectedIndex()]);
-        if (dsTheMuonBangMaTheDocGia.length == 0) {
+        dsPhieuMuonBangMaTheDocGia = tblphieumuonsachDAO.layDSPhieuMuonSachBangMaTheDocGiaDistinct(dsMaTheDocGia[cbbPhieuTraSachHoTen.getSelectedIndex()]);
+        if (dsPhieuMuonBangMaTheDocGia.length == 0) {
             txtTraSachLoi.setVisible(true);
             txtTraSachLoi.setForeground(Color.red);
             txtTraSachLoi.setText("Đọc giả không có phiếu mượn");
             coTraCoPhieuMuonSach = false;
 //            System.out.println("Tien no: " + TheDocGiaDAO.layTienNoBangMaThe(dsMaTheDocGia[cbbPhieuTraSachHoTen.getSelectedIndex()]));
             txtTienNo.setText(String.valueOf(TheDocGiaDAO.layTienNoBangMaThe(dsMaTheDocGia[cbbPhieuTraSachHoTen.getSelectedIndex()])));
-            combomodeldsTheMuonBangMaTheDocGia = new TheDocGiaComboModel(dsTheMuonBangMaTheDocGia);
+            combomodeldsTheMuonBangMaTheDocGia = new TheDocGiaComboModel(dsPhieuMuonBangMaTheDocGia);
             cbbPhieuTraPhieuMuon.setModel(combomodeldsTheMuonBangMaTheDocGia);
             btnTraSach.setVisible(false);
         } else {
@@ -1923,7 +1952,7 @@ public class frmGUI extends javax.swing.JFrame {
             txtTraSachLoi.setForeground(Color.green);
             txtTraSachLoi.setText("");
 
-            combomodeldsTheMuonBangMaTheDocGia = new TheDocGiaComboModel(dsTheMuonBangMaTheDocGia);
+            combomodeldsTheMuonBangMaTheDocGia = new TheDocGiaComboModel(dsPhieuMuonBangMaTheDocGia);
             cbbPhieuTraPhieuMuon.setModel(combomodeldsTheMuonBangMaTheDocGia);
             int TienPhatKyNay = 0;
             DefaultTableModel modelTraSach = new DefaultTableModel(new String[]{"STT", "Mã Sách", "Ngày Mượn", "Số Ngày Mượn", "Tiền Phạt"}, 0);
@@ -1950,8 +1979,37 @@ public class frmGUI extends javax.swing.JFrame {
             txtTongNo.setText(String.valueOf(TongNo));
             tbPhieuTraSach.setModel(modelTraSach);
         }
+        TaoReportPhieuMuonSach(Integer.parseInt(dsMaTheDocGia[cbbMaTheDocGia.getSelectedIndex()]));
     }//GEN-LAST:event_btnLuuPhieuActionPerformed
+    
+    private void TaoReportPhieuMuonSach(int maTheDocGia) {
+        JasperReport jasperReport;
+        try {
+            jasperReport = JasperCompileManager
+                    .compileReport("D:\\Study_Files\\Lien_Thong_Dai_Hoc\\Hoc_Ky_4\\Java\\Do_An\\QUAN_LY_THU_VIEN\\src\\tools\\jasper_report_template.jrxml");
 
+            Map parameters = new HashMap();
+
+            parameters.put("ReportTitle", "Phieu muon sach");
+            parameters.put("Thang", "aaa");
+
+            JasperPrint jasperPrint = null;
+
+            DataBeanList DataBeanList = new DataBeanList();
+            ArrayList<DataBean> dataList = DataBeanList.getDataBeanList(maTheDocGia);
+
+            JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(dataList);
+
+            jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, beanColDataSource);
+
+            JasperViewer.viewReport(jasperPrint, false);
+
+            System.out.println("Done!");
+        } catch (JRException e1) {
+            e1.printStackTrace();
+        }
+    }
+    
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         if (kiemTraHan()) {
             return;
@@ -2131,7 +2189,7 @@ public class frmGUI extends javax.swing.JFrame {
 
     private void btnThuanThanhLySachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThuanThanhLySachActionPerformed
         // TODO add your handling code here:
-        if(tblDanhSachSach10.getRowCount() == 0){
+        if (tblDanhSachSach10.getRowCount() == 0) {
             return;
         }
         ThuanThanhLySach t = new ThuanThanhLySach();
@@ -2156,8 +2214,7 @@ public class frmGUI extends javax.swing.JFrame {
     private void btnThem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem3ActionPerformed
         if (txtHoTen3.getText().equals("") || txtDiaChi3.getText().equals("") || txtEmail3.getText().equals("") || dtpNgaySinh3.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else {
+        } else {
             TheDocGia the = new TheDocGia();
             the.setMaNhanVienLap(MaNhanVienDangNhap);
             the.setLoaiDocGia(cboLoaiDocGia3.getSelectedItem().toString());
@@ -2170,8 +2227,9 @@ public class frmGUI extends javax.swing.JFrame {
             the.setTrangThaiXoa(false);
             TheDocGiaDAO.ThemTheDocGia(the);
             JOptionPane.showMessageDialog(null, "Thêm thẻ đọc viên thành công!", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
-            tblTheDocGia3.setModel( new TheDocGiaTableModel("SELECT * FROM tblthedocgia WHERE TrangThaiXoa=0"));
+            tblTheDocGia3.setModel(new TheDocGiaTableModel("SELECT * FROM tblthedocgia WHERE TrangThaiXoa=0"));
         }
+
     }//GEN-LAST:event_btnThem3ActionPerformed
 
     private void btnXoa3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoa3ActionPerformed
@@ -2181,12 +2239,26 @@ public class frmGUI extends javax.swing.JFrame {
             int selectedRowIndex = tblTheDocGia3.getSelectedRow();
             String email = tblTheDocGia3.getModel().getValueAt(selectedRowIndex, 4).toString();
             System.out.println(email);
-            
+
             //Xoa dong theo email
             TheDocGiaDAO.updateTrangThaiXoa(email);
-            tblTheDocGia3.setModel( new TheDocGiaTableModel("SELECT * FROM tblthedocgia WHERE TrangThaiXoa=0"));
+            tblTheDocGia3.setModel(new TheDocGiaTableModel("SELECT * FROM tblthedocgia WHERE TrangThaiXoa=0"));
         }
     }//GEN-LAST:event_btnXoa3ActionPerformed
+
+    private void btnThayMatKhau8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThayMatKhau8ActionPerformed
+        String matKhauCuNhap = psfMatKhauCu8.getText().toString();
+        String matKhauCu = ThuanNhanVienDangNhap.getMatKhau();
+        if (!matKhauCuNhap.equals(matKhauCu)) {
+            JOptionPane.showMessageDialog(null, "Mật khẩu cũ không khớp!", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+
+        }
+    }//GEN-LAST:event_btnThayMatKhau8ActionPerformed
+
+    private void btnThem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem5ActionPerformed
+
+    }//GEN-LAST:event_btnThem5ActionPerformed
     //Lam tiep nhan nhanvien
     public static void KhoiTaoBangTiepNhanNhanVien(JTable tbNhanVien4) {
         tbNhanVien4.setModel(new ThuanTableModelNhanVien("select* from tblnhanvien"));

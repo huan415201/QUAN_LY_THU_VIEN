@@ -16,6 +16,8 @@ public class tblchitietphieumuon implements java.io.Serializable {
     @Id
     @Column(name = "MaSach", updatable = false, nullable = false)
     private int MaSach;
+    
+    private String TenSach;
 
     public tblchitietphieumuon(int MaPhieuMuon, int MaSach) {
         this.MaPhieuMuon = MaPhieuMuon;
@@ -42,4 +44,12 @@ public class tblchitietphieumuon implements java.io.Serializable {
         this.MaSach = MaSach;
     }
 
+     public String getTenSach() {
+        return TenSach;
+    }
+     
+     public void setTenSach(String TenSach) {
+        this.TenSach = TenSach;
+    }
+    
 }
